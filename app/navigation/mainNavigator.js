@@ -3,7 +3,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-
+import { createDrawerNavigator } from '@react-navigation/drawer'
 //bottom tab bar icons
 import IoniconsI from 'react-native-vector-icons/Ionicons'
 import FontAwesomeI from 'react-native-vector-icons/FontAwesome'
@@ -25,6 +25,7 @@ const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 const ProfileStack = createStackNavigator()
 const PlayStack = createStackNavigator()
+const Drawer = createDrawerNavigator()
 
 function getHeaderTitle(route) {
   const routeName = route.state ? route.state.routes[route.state.index].name : 'Sport'
@@ -47,7 +48,7 @@ export const AuthNavigator = () => (
     <Stack.Screen name="SignUp" component={SignUpScreen} />
   </Stack.Navigator>
 )
-export const PlayStackNavigator = () => {
+export const HomeStackNavigator = () => {
   return (
     <PlayStack.Navigator>
       <PlayStack.Screen
@@ -67,6 +68,13 @@ export const PlayStackNavigator = () => {
     </PlayStack.Navigator>
   )
 }
+
+export const DrawerNavigator = () => (
+  <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Screen name="Home" component={HomeStackNavigator} />
+    <Drawer.Screen name="Search" component={SearchResults} />
+  </Drawer.Navigator>
+)
 
 export const ProfileStackNavigator = () => (
   <ProfileStack.Navigator>
@@ -109,7 +117,7 @@ const MainTabNavigator = () => {
         labelStyle: { fontSize: 16, marginTop: -8 }
       }}
     >
-      <Tab.Screen name="Home" component={PlayStackNavigator} />
+      <Tab.Screen name="Home" component={DrawerNavigator} />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>
   )
