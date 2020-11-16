@@ -61,7 +61,7 @@ export const PlayStackNavigator = () => {
           headerTintColor: 'white',
           title: 'Play Games and Earn',
           headerLeft: () => (
-            <IoniconsI name="logo-game-controller-b" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
+            <IoniconsI name="cube-outline" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
           )
         }}
         name="Play"
@@ -122,7 +122,7 @@ const MainTabNavigator = () => {
           } if (route.name === 'Profile') {
             return <FontAwesomeI name="user" size={size} color={color} style={{ marginBottom: -5 }} />
           } if (route.name === 'Play') {
-            return <IoniconsI name="logo-game-controller-b" size={size} color={color} style={{ marginBottom: -5 }} />
+            return <IoniconsI name="cube-outline" size={size} color={color} style={{ marginBottom: -5 }} />
           }
         }
       })}
