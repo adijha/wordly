@@ -184,7 +184,7 @@ export const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
-      openByDefault
+      // openByDefault
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       overlayColor="transparent"
     >
