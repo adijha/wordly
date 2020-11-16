@@ -1,35 +1,110 @@
-import React from 'react'
-import { FlatList, View } from 'react-native'
-import {  Header, Item, Input, Icon } from 'native-base'
-import Intro from '../../../assets/intro.jpg'
-import { Card } from '../../../components/Card'
+import React, { useState } from 'react'
+import { SafeAreaView, Text, StyleSheet, View, FlatList, Image,ScrollView } from 'react-native'
+import axios from 'axios'
+import { Card, SearchBar } from 'react-native-elements'
 
-const PlayScreen = (props) => {
-  const games = [
-    { text: 'PUBG MOBILE', img: Intro }
-  ]
-  return (
-    <View style={{ backgroundColor: '#23283B', flex: 1, paddingTop: 10 }}>
-      <Header searchBar rounded>
-        <Item>
-          <Icon name="ios-search" />
-          <Input placeholder="Search" />
-          {/* <Icon name="ios-people" /> */}
-        </Item>
-      </Header>
-      <FlatList
-        data={games}
-        renderItem={({ item }) => (
-          <Card
-            onPress={() => props.navigation.navigate('UserDetails', { game: item.text })}
-            img={item.img}
-            text={item.text}
-          />
-        )}
-        keyExtractor={(item) => item.text}
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white'
+  },
+  itemStyle: {
+    padding: 10
+  }
+})
+
+const App = () => {
+  const [search, setSearch] = useState('')
+  const [filteredDataSource, setFilteredDataSource] = useState([])
+  
+  const searchFilterFunction = async (text) => {
+    if (text) {
+      setSearch(text)
+      const data = await axios.get(`https://api.domainsdb.info/v1/domains/search?domain=${text}`)
+      setFilteredDataSource(data.data.domains)
+    }
+  }
+                const getItem = (item) => {
+                  // Function for click on an item
+                  alert(`Id : ${  item.domain}`)
+                }
+
+  const ItemView = ({ item }) => {
+    return (
+      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+        {item.domain} {item.isDead}
+      </Text>
+    )
+  }
+
+  const ItemSeparatorView = () => {
+    return (
+      // Flat List Item Separator
+      <View
+        style={{
+          height: 0.5,
+          width: '100%',
+          backgroundColor: '#C8C8C8'
+        }}
       />
-    </View>
+    )
+  }
+
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View style={styles.container}>
+        <SearchBar
+          round
+          searchIcon={{ size: 25 }}
+          onChangeText={(text) => searchFilterFunction(text)}
+          onClear={() => setFilteredDataSource([])}
+          placeholder="Type Here..."
+          value={search}
+        />
+        {filteredDataSource.length > 0 ? (
+          <FlatList
+            data={filteredDataSource}
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={ItemSeparatorView}
+            renderItem={ItemView}
+          />
+        ) : (
+          <ScrollView>
+            <Card containerStyle={{ borderRadius: 10, padding: 0 }}>
+              <Image
+                source={require('../../../assets/intro.jpg')}
+                style={{
+                  height: 200,
+                  resizeMode: 'cover',
+                  width: '100%',
+                  borderTopRightRadius: 10,
+                  borderTopLeftRadius: 10
+                }}
+              />
+              <Text style={{ margin: 10, fontSize: 15 }}>
+                The idea with React is more about component structure than actual design.
+              </Text>
+            </Card>
+            <Card containerStyle={{ borderRadius: 10, padding: 0 }}>
+              <Image
+                source={require('../../../assets/intro.jpg')}
+                style={{
+                  height: 200,
+                  resizeMode: 'cover',
+                  width: '100%',
+                  borderTopRightRadius: 10,
+                  borderTopLeftRadius: 10
+                }}
+              />
+              <Text style={{ margin: 10, fontSize: 15 }}>
+                The idea with React is more about component structure than actual design.
+              </Text>
+            </Card>
+          </ScrollView>
+        )}
+      </View>
+    </SafeAreaView>
   )
 }
 
-export default PlayScreen
+export default App
