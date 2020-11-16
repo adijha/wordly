@@ -7,18 +7,18 @@ import Img from '../../../assets/profile.jpg'
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#22273A',
-    height: 140
+    height: 100
   },
   avatar: {
-    width: 130,
-    height: 130,
+    width: 120,
+    height: 120,
     borderRadius: 63,
     borderWidth: 4,
     borderColor: 'white',
     marginBottom: 10,
     alignSelf: 'center',
     position: 'absolute',
-    marginTop: 75
+    marginTop: 40
   },
   body: {
     marginTop: 40
@@ -109,7 +109,9 @@ export default function Profile(props) {
               info
               style={{
                 width: 46,
-                justifyContent: 'center'
+                justifyContent: 'center',
+                alignSelf:'center',
+                backgroundColor: '#3E69B9'
               }}
             >
               <ActivityIndicator size="large" color="white" />

@@ -81,7 +81,7 @@ export default function SignInScreen(props) {
         const response = await AuthApi.post('/signin', { email, password })
         await AsyncStorage.setItem('token', response.data.token)
         setLoading(false)
-        props.navigation.navigate('Earn')
+        props.navigation.navigate('Home')
       } catch (err) {
         setErrorMessage('Something went wrong')
         setLoading(false)

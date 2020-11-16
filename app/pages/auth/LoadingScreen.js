@@ -12,10 +12,10 @@ const styles = StyleSheet.create({
 })
 export default function LoadingScreen(props) {
   const tryLogin = useCallback(async () => {
-    setTimeout(async () => {
+    // setTimeout(async () => {
       const token = await AsyncStorage.getItem('token')
-      props.navigation.navigate(token ? 'Earn' : 'SignIn')
-    }, 1000)
+      props.navigation.navigate(token ? 'Home' : 'SignIn')
+    // }, 1000)
   }, [props.navigation])
   useEffect(() => {
     tryLogin()

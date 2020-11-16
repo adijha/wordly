@@ -7,16 +7,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 //bottom tab bar icons
 import IoniconsI from 'react-native-vector-icons/Ionicons'
 import FontAwesomeI from 'react-native-vector-icons/FontAwesome'
-import MaterialCommunityIconsI from 'react-native-vector-icons/MaterialCommunityIcons'
+
 //Home
 //Play
-import PlayScreen from '../pages/home/playStack/PlayScreen'
-import PlayDetails from '../pages/home/playStack/PlayDetails'
+import HomeScreen from '../pages/home/homeStack/Home'
+import UserDetails from '../pages/home/homeStack/UserDetails'
+import SearchResults from '../pages/home/homeStack/SearchResults'
 //Profile
 import ProfileScreen from '../pages/home/profileStack/ProfileScreen'
-//Earn
-import EarnScreen from '../pages/home/earnStack/EarnScreen'
-import EarnDetails from '../pages/home/earnStack/EarnDetails'
 //auth
 import LoadingScreen from '../pages/auth/LoadingScreen'
 import SignInScreen from '../pages/auth/SignInScreen'
@@ -25,7 +23,6 @@ import SignUpScreen from '../pages/auth/SignUpScreen'
 // initialize navigator
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
-const EarnStack = createStackNavigator()
 const ProfileStack = createStackNavigator()
 const PlayStack = createStackNavigator()
 
@@ -59,38 +56,17 @@ export const PlayStackNavigator = () => {
             backgroundColor: '#22273A'
           },
           headerTintColor: 'white',
-          title: 'Play Games and Earn',
-          headerLeft: () => (
-            <IoniconsI name="cube-outline" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
-          )
+          title: 'Wordly',
+          headerLeft: () => <IoniconsI name="cube-outline" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
         }}
-        name="Play"
-        component={PlayScreen}
+        name="Home"
+        component={HomeScreen}
       />
-      <PlayStack.Screen name="PlayDetails" component={PlayDetails} />
+      <PlayStack.Screen name="UserDetails" component={UserDetails} />
+      <PlayStack.Screen name="SearchResults" component={SearchResults} />
     </PlayStack.Navigator>
   )
 }
-
-export const EarnStackNavigator = () => (
-  <EarnStack.Navigator>
-    <EarnStack.Screen
-      options={{
-        headerStyle: {
-          backgroundColor: '#22273A'
-        },
-        headerTintColor: 'white',
-        title: 'Play Games and Earn',
-        headerLeft: () => (
-          <MaterialCommunityIconsI name="currency-inr" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
-        )
-      }}
-      name="Earn"
-      component={EarnScreen}
-    />
-    <EarnStack.Screen name="EarnDetails" component={EarnDetails} />
-  </EarnStack.Navigator>
-)
 
 export const ProfileStackNavigator = () => (
   <ProfileStack.Navigator>
@@ -100,7 +76,7 @@ export const ProfileStackNavigator = () => (
           backgroundColor: '#22273A'
         },
         headerTintColor: 'white',
-        title: 'Your Profile',
+        title: 'My Profile',
         headerLeft: () => <FontAwesomeI name="user" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
       }}
       name="Profile"
@@ -113,28 +89,26 @@ const MainTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color }) => {
-        const size = 30
-          if (route.name === 'Earn') {
-            return (
-              <MaterialCommunityIconsI name="currency-inr" size={size} color={color} style={{ marginBottom: -5 }} />
-            )
-          } if (route.name === 'Profile') {
-            return <FontAwesomeI name="user" size={size} color={color} style={{ marginBottom: -5 }} />
-          } if (route.name === 'Play') {
-            return <IoniconsI name="cube-outline" size={size} color={color} style={{ marginBottom: -5 }} />
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName
+
+          if (route.name === 'Home') {
+            iconName = focused ? 'ios-home' : 'ios-home-outline'
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person' : 'person-outline'
           }
+          return <IoniconsI name={iconName} size={size} color={color} />
         }
       })}
       tabBarOptions={{
         activeTintColor: '#FABE0F',
         inactiveBackgroundColor: '#23283B',
         activeBackgroundColor: '#23283B',
-        style: { height: 57 }
+        style: { height: 60 },
+        labelStyle: { fontSize: 16, marginTop: -8 }
       }}
     >
-      <Tab.Screen name="Play" component={PlayStackNavigator} />
-      <Tab.Screen name="Earn" component={EarnStackNavigator} />
+      <Tab.Screen name="Home" component={PlayStackNavigator} />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>
   )
@@ -156,7 +130,7 @@ const MainContainer = () => {
             title: getHeaderTitle(route),
             headerShown: false
           })}
-          name="Earn"
+          name="Home"
           component={MainTabNavigator}
         />
       </Stack.Navigator>
