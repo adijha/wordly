@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
+import { TouchableOpacity } from 'react-native'
 //navigation imports
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
 //bottom tab bar icons
 import IoniconsI from 'react-native-vector-icons/Ionicons'
 import FontAwesomeI from 'react-native-vector-icons/FontAwesome'
@@ -48,7 +50,7 @@ export const AuthNavigator = () => (
     <Stack.Screen name="SignUp" component={SignUpScreen} />
   </Stack.Navigator>
 )
-export const HomeStackNavigator = () => {
+export const HomeStackNavigator = ({ navigation }) => {
   return (
     <PlayStack.Navigator>
       <PlayStack.Screen
@@ -58,7 +60,11 @@ export const HomeStackNavigator = () => {
           },
           headerTintColor: 'white',
           title: 'Wordly',
-          headerLeft: () => <IoniconsI name="cube-outline" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <IoniconsI name="cube-outline" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
+            </TouchableOpacity>
+          )
         }}
         name="Home"
         component={HomeScreen}
@@ -68,14 +74,26 @@ export const HomeStackNavigator = () => {
     </PlayStack.Navigator>
   )
 }
-
-export const DrawerNavigator = () => (
-  <Drawer.Navigator initialRouteName="Home">
-    <Drawer.Screen name="Home" component={HomeStackNavigator} />
-    <Drawer.Screen name="Search" component={SearchResults} />
-  </Drawer.Navigator>
-)
-
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="Help" onPress={() => alert('https://mywebsite.com/help')} />
+    </DrawerContentScrollView>
+  )
+}
+export const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      overlayColor="transparent"
+    >
+      <Drawer.Screen name="Home" component={HomeStackNavigator} />
+      <Drawer.Screen name="Search" component={SearchResults} />
+    </Drawer.Navigator>
+  )
+}
 export const ProfileStackNavigator = () => (
   <ProfileStack.Navigator>
     <ProfileStack.Screen
