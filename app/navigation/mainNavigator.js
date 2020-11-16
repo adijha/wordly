@@ -77,7 +77,8 @@ export const ProfileStackNavigator = () => (
         },
         headerTintColor: 'white',
         title: 'My Profile',
-        headerLeft: () => <FontAwesomeI name="user" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
+        headerLeft: () => <FontAwesomeI name="user" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />,
+        headerRight: () => <FontAwesomeI name="pencil" size={25} color="#FABE0F" style={{ marginRight: 20 }} />
       }}
       name="Profile"
       component={ProfileScreen}

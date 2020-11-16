@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Image, ActivityIndicator } from 'react-native'
-import { Container,Text,  Button } from 'native-base'
+import { StyleSheet, View, Image, ActivityIndicator, ScrollView } from 'react-native'
+import { Text, Button } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
 import Img from '../../../assets/profile.jpg'
 
@@ -25,13 +25,14 @@ const styles = StyleSheet.create({
   },
   bodyContent: {
     // flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
     padding: 30
   },
   name: {
     fontSize: 28,
     color: '#696969',
-    fontWeight: '600'
+    fontWeight: '600',
+    alignSelf: 'center'
   },
   info: {
     fontSize: 16,
@@ -54,27 +55,123 @@ const styles = StyleSheet.create({
     width: 250,
     borderRadius: 30,
     backgroundColor: '#00BFFF'
+  },
+  tag: {
+    padding: 5,
+    borderRadius: 13,
+    borderWidth: 1,
+    borderColor: 'gray',
+    paddingHorizontal: 15,
+    margin: 5
   }
 })
 export default function Profile(props) {
   const [loading, setLoading] = useState(false)
   return (
-    <Container>
+    <ScrollView>
       <View style={styles.header} />
       <Image style={styles.avatar} source={Img} />
       <View style={styles.body}>
         <View style={styles.bodyContent}>
           <Text style={styles.name}>Aditya Kumar Jha</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.info}>Play Points: 30</Text>
-            <Text style={{ width: 20 }}> </Text>
-
-            <Text style={styles.info}>Username: adijha</Text>
-          </View>
           <Text style={styles.description}>
-            Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse
-            consequuntur ius an,
+            I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
+            with it&apos;s battery I run my mac.
           </Text>
+          {/* <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignSelf: 'center'
+            }}
+          >
+            <Text style={styles.info}>Occupation :</Text>
+            <Text style={{ width: 10 }}> </Text>
+            <Text style={styles.info}>Fisherman</Text>
+          </View> */}
+          <View
+            style={{
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              marginVertical: 15
+            }}
+          />
+          <Text
+            style={
+              {
+                // fontWeight: '700'
+              }
+            }
+          >
+            Jaipur National University . Mojitolabs
+          </Text>
+          <Text
+            style={
+              {
+                // fontWeight: '700'
+              }
+            }
+          >
+            Gurgaun, Haryana, India
+          </Text>
+
+          <Text style={{ fontSize: 17, marginTop: 10 }}>About :</Text>
+          <Text style={{ color: '#999' }}>
+            I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
+            with it&apos;s battery I run my mac.
+          </Text>
+
+          <Text style={{ fontSize: 17, marginTop: 10 }}>Skills :</Text>
+          <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
+            <View style={styles.tag}>
+              <Text style={{ color: '#555' }}>React.js</Text>
+            </View>
+            <View style={styles.tag}>
+              <Text style={{ color: '#555' }}>Redux.js</Text>
+            </View>
+            <View style={styles.tag}>
+              <Text style={{ color: '#555' }}>Node.js</Text>
+            </View>
+            <View style={styles.tag}>
+              <Text style={{ color: '#555' }}>Mongoose.js</Text>
+            </View>
+            <View style={styles.tag}>
+              <Text style={{ color: '#555' }}>Express.js</Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 5, fontWeight: '700' }}>Experience :</Text>
+
+          <Text style={{ fontSize: 18 }}>All Asia conc Developer</Text>
+          <Text>Mojitolabs</Text>
+          <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+          <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
+          <View
+            style={{
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              marginVertical: 5
+            }}
+          />
+          <Text style={{ fontSize: 18 }}>Magic Developer</Text>
+          <Text>Mojitolabs</Text>
+          <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+          <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
+          <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 5, fontWeight: '700' }}>Education :</Text>
+
+          <Text style={{ fontSize: 18 }}>Bachelor of Engineering</Text>
+          <Text>Wanaarasiasassad</Text>
+          <Text style={{ color: '#222' }}>January 2020 - january 2020</Text>
+
+          <View
+            style={{
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              marginVertical: 5
+            }}
+          />
+          <Text style={{ fontSize: 18 }}>Magic Developer</Text>
+          <Text>Mojitolabs</Text>
+          <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+
+          <View style={{ marginVertical: 20 }} />
+
           <Button
             full
             rounded
@@ -110,7 +207,7 @@ export default function Profile(props) {
               style={{
                 width: 46,
                 justifyContent: 'center',
-                alignSelf:'center',
+                alignSelf: 'center',
                 backgroundColor: '#3E69B9'
               }}
             >
@@ -119,6 +216,6 @@ export default function Profile(props) {
           )}
         </View>
       </View>
-    </Container>
+    </ScrollView>
   )
 }

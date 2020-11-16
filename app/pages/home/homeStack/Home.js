@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SafeAreaView, Text, StyleSheet, View, FlatList, Image,ScrollView } from 'react-native'
+import { SafeAreaView, Text, StyleSheet, View, FlatList, Image, ScrollView } from 'react-native'
 import axios from 'axios'
 import { Card, SearchBar } from 'react-native-elements'
 
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 const App = () => {
   const [search, setSearch] = useState('')
   const [filteredDataSource, setFilteredDataSource] = useState([])
-  
+
   const searchFilterFunction = async (text) => {
     if (text) {
       setSearch(text)
@@ -23,10 +23,10 @@ const App = () => {
       setFilteredDataSource(data.data.domains)
     }
   }
-                const getItem = (item) => {
-                  // Function for click on an item
-                  alert(`Id : ${  item.domain}`)
-                }
+  const getItem = (item) => {
+    // Function for click on an item
+    alert(`Id : ${item.domain}`)
+  }
 
   const ItemView = ({ item }) => {
     return (
@@ -48,7 +48,6 @@ const App = () => {
       />
     )
   }
-
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
