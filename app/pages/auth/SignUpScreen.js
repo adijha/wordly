@@ -10,6 +10,7 @@ import {
   ScrollView
 } from 'react-native'
 import { Button } from 'native-base'
+import { SocialIcon } from 'react-native-elements'
 import AsyncStorage from '@react-native-community/async-storage'
 import AuthApi from '../../api/Auth'
 
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   form: {
-    marginBottom: 48
+    marginBottom: 20
     // marginHorizontal: 30,
   },
   inputTitle: {
@@ -177,9 +178,19 @@ export default function SignUpScreen(props) {
         )}
       </View>
 
+      <Text style={{ fontSize: 14, alignSelf: 'center' }}>Or signup with</Text>
+      <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        <SocialIcon type="facebook" />
+
+        <SocialIcon type="google" />
+
+        <SocialIcon type="linkedin" />
+      </View>
+
       <TouchableOpacity
         style={{
-          alignSelf: 'center'
+          alignSelf: 'center',
+          marginTop: 20
         }}
         onPress={() => {
           props.navigation.navigate('SignIn')
