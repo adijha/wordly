@@ -10,6 +10,7 @@ import {
   ScrollView
 } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
+import { SocialIcon } from 'react-native-elements'
 import { Button } from 'native-base'
 import AuthApi from '../../api/Auth'
 
@@ -166,13 +167,24 @@ export default function SignInScreen(props) {
           <Text
             style={{
               color: '#414959',
-              fontSize: 13
+              fontSize: 13,
+              marginBottom: 10
             }}
           >
             Forgot your password ?
           </Text>
         </TouchableOpacity>
       )}
+
+      <Text style={{ fontSize: 14, marginVertical: 10, alignSelf: 'center' }}>Or Login with</Text>
+      <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        <SocialIcon type="facebook" />
+
+        <SocialIcon type="google" />
+
+        <SocialIcon type="linkedin" />
+      </View>
+
       <TouchableOpacity
         style={{
           alignSelf: 'center',
@@ -189,7 +201,7 @@ export default function SignInScreen(props) {
             fontSize: 13
           }}
         >
-          New to Pubg App?
+          New to Wordly ?{' '}
           <Text
             style={{
               fontWeight: '500',
