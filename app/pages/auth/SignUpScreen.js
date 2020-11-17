@@ -84,7 +84,7 @@ export default function SignUpScreen(props) {
         const response = await AuthApi.post('/signup', { email, password })
         await AsyncStorage.setItem('token', response.data.token)
         setLoading(false)
-        props.navigation.navigate('Earn')
+        props.navigation.navigate('Home')
       } catch (error) {
         setErrorMessage('Something went wrong')
         setLoading(false)

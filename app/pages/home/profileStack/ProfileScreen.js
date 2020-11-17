@@ -7,32 +7,33 @@ import Img from '../../../assets/profile.jpg'
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#22273A',
-    height: 100
+    height: 80
   },
   avatar: {
-    width: 120,
-    height: 120,
+    width: 110,
+    height: 110,
     borderRadius: 63,
     borderWidth: 4,
     borderColor: 'white',
-    marginBottom: 10,
-    alignSelf: 'center',
+    // marginBottom: 10,
+    // alignSelf: 'center',
     position: 'absolute',
-    marginTop: 40
+    marginTop: 20,
+    marginLeft: 20,
+    resizeMode: 'cover',
+    zIndex: 11
   },
   body: {
-    marginTop: 40
+    // marginTop: 25
   },
   bodyContent: {
     // flex: 1,
-    // alignItems: 'center',
-    padding: 30
+    // padding: 30
   },
   name: {
-    fontSize: 28,
-    color: '#696969',
-    fontWeight: '600',
-    alignSelf: 'center'
+    fontSize: 19
+    // color: '#696969',
+    // fontWeight: '700'
   },
   info: {
     fontSize: 16,
@@ -40,10 +41,9 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   description: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#696969',
-    marginTop: 10,
-    textAlign: 'center'
+    marginTop: 10
   },
   buttonContainer: {
     marginTop: 10,
@@ -68,152 +68,223 @@ const styles = StyleSheet.create({
 export default function Profile(props) {
   const [loading, setLoading] = useState(false)
   return (
-    <ScrollView>
-      <View style={styles.header} />
+    <ScrollView style={{ backgroundColor: '#ededed' }}>
       <Image style={styles.avatar} source={Img} />
+      <View style={styles.header} />
       <View style={styles.body}>
         <View style={styles.bodyContent}>
-          <Text style={styles.name}>Aditya Kumar Jha</Text>
-          <Text style={styles.description}>
-            I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
-            with it&apos;s battery I run my mac.
-          </Text>
-          {/* <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignSelf: 'center'
-            }}
-          >
-            <Text style={styles.info}>Occupation :</Text>
-            <Text style={{ width: 10 }}> </Text>
-            <Text style={styles.info}>Fisherman</Text>
-          </View> */}
+          <View style={{ alignSelf: 'center', backgroundColor: '#fff', width: '100%', padding: 30, paddingTop: 50 }}>
+            <Text style={styles.name}>Bhaskar Diwakar Chaudhary</Text>
+            <Text style={{ fontSize: 14, marginVertical: 5 }}>
+              I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
+              with it&apos;s battery I run my mac.
+            </Text>
+            {/* <View
+              style={{
+                borderBottomWidth: StyleSheet.hairlineWidth,
+                marginVertical: 15
+              }}
+            /> */}
+            <Text style={{ fontSize: 14, marginVertical: 2 }}>Jaipur National University . Mojitolabs</Text>
+            <Text style={{ fontSize: 14, marginVertical: 2 }}>Gurgaun, Haryana, India</Text>
+          </View>
           <View
             style={{
-              borderBottomWidth: StyleSheet.hairlineWidth,
-              marginVertical: 15
+              alignSelf: 'center',
+              backgroundColor: '#fff',
+              width: '100%',
+              paddingHorizontal: 30,
+              marginTop: 10,
+              paddingVertical: 18
             }}
-          />
-          <Text
-            style={
-              {
-                // fontWeight: '700'
-              }
-            }
           >
-            Jaipur National University . Mojitolabs
-          </Text>
-          <Text
-            style={
-              {
-                // fontWeight: '700'
-              }
-            }
+            <Text style={{ fontSize: 16, marginBottom: 8 }}>About</Text>
+            <Text style={{ fontSize: 14 }}>
+              I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
+              with it&apos;s battery I run my mac.
+            </Text>
+          </View>
+          <View
+            style={{
+              alignSelf: 'center',
+              backgroundColor: '#fff',
+              width: '100%',
+              paddingHorizontal: 30,
+              marginTop: 10,
+              paddingVertical: 18
+            }}
           >
-            Gurgaun, Haryana, India
-          </Text>
+            <Text style={{ fontSize: 16, marginTop: 10 }}>Skills</Text>
+            <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
+              <View style={styles.tag}>
+                <Text
+                  style={{
+                    color: '#555',
 
-          <Text style={{ fontSize: 17, marginTop: 10 }}>About :</Text>
-          <Text style={{ color: '#999' }}>
-            I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
-            with it&apos;s battery I run my mac.
-          </Text>
+                    fontSize: 14
+                  }}
+                >
+                  React.js
+                </Text>
+              </View>
+              <View style={styles.tag}>
+                <Text
+                  style={{
+                    color: '#555',
 
-          <Text style={{ fontSize: 17, marginTop: 10 }}>Skills :</Text>
-          <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-            <View style={styles.tag}>
-              <Text style={{ color: '#555' }}>React.js</Text>
-            </View>
-            <View style={styles.tag}>
-              <Text style={{ color: '#555' }}>Redux.js</Text>
-            </View>
-            <View style={styles.tag}>
-              <Text style={{ color: '#555' }}>Node.js</Text>
-            </View>
-            <View style={styles.tag}>
-              <Text style={{ color: '#555' }}>Mongoose.js</Text>
-            </View>
-            <View style={styles.tag}>
-              <Text style={{ color: '#555' }}>Express.js</Text>
+                    fontSize: 14
+                  }}
+                >
+                  Redux.js
+                </Text>
+              </View>
+              <View style={styles.tag}>
+                <Text
+                  style={{
+                    color: '#555',
+
+                    fontSize: 14
+                  }}
+                >
+                  Node.js
+                </Text>
+              </View>
+              <View style={styles.tag}>
+                <Text
+                  style={{
+                    color: '#555',
+
+                    fontSize: 14
+                  }}
+                >
+                  Mongoose.js
+                </Text>
+              </View>
+              <View style={styles.tag}>
+                <Text
+                  style={{
+                    color: '#555',
+
+                    fontSize: 14
+                  }}
+                >
+                  Express.js
+                </Text>
+              </View>
             </View>
           </View>
-          <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 5, fontWeight: '700' }}>Experience :</Text>
-
-          <Text style={{ fontSize: 18 }}>All Asia conc Developer</Text>
-          <Text>Mojitolabs</Text>
-          <Text style={{ color: '#222' }}>January 2020 - Present</Text>
-          <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
-          <View
-            style={{
-              borderBottomWidth: StyleSheet.hairlineWidth,
-              marginVertical: 5
-            }}
-          />
-          <Text style={{ fontSize: 18 }}>Magic Developer</Text>
-          <Text>Mojitolabs</Text>
-          <Text style={{ color: '#222' }}>January 2020 - Present</Text>
-          <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
-          <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 5, fontWeight: '700' }}>Education :</Text>
-
-          <Text style={{ fontSize: 18 }}>Bachelor of Engineering</Text>
-          <Text>Wanaarasiasassad</Text>
-          <Text style={{ color: '#222' }}>January 2020 - january 2020</Text>
 
           <View
             style={{
-              borderBottomWidth: StyleSheet.hairlineWidth,
-              marginVertical: 5
-            }}
-          />
-          <Text style={{ fontSize: 18 }}>Magic Developer</Text>
-          <Text>Mojitolabs</Text>
-          <Text style={{ color: '#222' }}>January 2020 - Present</Text>
-
-          <View style={{ marginVertical: 20 }} />
-
-          <Button
-            full
-            rounded
-            info
-            style={{
-              backgroundColor: '#3E69B9',
-              marginVertical: 30
+              alignSelf: 'center',
+              backgroundColor: '#fff',
+              width: '100%',
+              paddingHorizontal: 30,
+              marginTop: 10,
+              paddingVertical: 18
             }}
           >
-            <Text style={{ color: 'white' }}>Reset Password</Text>
-          </Button>
-          {!loading ? (
+            <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 5, fontWeight: '700' }}>Experience :</Text>
+
+            <Text style={{ fontSize: 18 }}>All Asia conc Developer</Text>
+            <Text>Mojitolabs</Text>
+            <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
+            <View
+              style={{
+                borderBottomWidth: StyleSheet.hairlineWidth,
+                marginVertical: 5
+              }}
+            />
+            <Text style={{ fontSize: 18 }}>Magic Developer</Text>
+            <Text>Mojitolabs</Text>
+            <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
+          </View>
+          <View
+            style={{
+              borderBottomWidth: StyleSheet.hairlineWidth
+            }}
+          />
+          <View
+            style={{
+              alignSelf: 'center',
+              backgroundColor: '#fff',
+              width: '100%',
+              paddingHorizontal: 30,
+              // marginTop: 10,
+              paddingVertical: 18
+            }}
+          >
+            <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 5, fontWeight: '700' }}>Education :</Text>
+
+            <Text style={{ fontSize: 18 }}>Bachelor of Engineering</Text>
+            <Text>Wanaarasiasassad</Text>
+            <Text style={{ color: '#222' }}>January 2020 - january 2020</Text>
+
+            <View
+              style={{
+                borderBottomWidth: StyleSheet.hairlineWidth,
+                marginVertical: 5
+              }}
+            />
+            <Text style={{ fontSize: 18 }}>Magic Developer</Text>
+            <Text>Mojitolabs</Text>
+            <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+          </View>
+          <View
+            style={{
+              alignSelf: 'center',
+              backgroundColor: '#fff',
+              width: '100%',
+              paddingHorizontal: 30,
+              marginTop: 10,
+              paddingVertical: 18
+            }}
+          >
             <Button
               full
               rounded
               info
               style={{
-                backgroundColor: '#3E69B9'
-              }}
-              onPress={async () => {
-                setLoading(true)
-                await AsyncStorage.removeItem('token')
-                props.navigation.navigate('SignIn')
-                setLoading(false)
+                backgroundColor: '#3E69B9',
+                marginVertical: 30
               }}
             >
-              <Text style={{ color: 'white' }}>Log Out</Text>
+              <Text style={{ color: 'white' }}>Reset Password</Text>
             </Button>
-          ) : (
-            <Button
-              rounded
-              info
-              style={{
-                width: 46,
-                justifyContent: 'center',
-                alignSelf: 'center',
-                backgroundColor: '#3E69B9'
-              }}
-            >
-              <ActivityIndicator size="large" color="white" />
-            </Button>
-          )}
+            {!loading ? (
+              <Button
+                full
+                rounded
+                info
+                style={{
+                  backgroundColor: '#3E69B9'
+                }}
+                onPress={async () => {
+                  setLoading(true)
+                  await AsyncStorage.removeItem('token')
+                  props.navigation.navigate('SignIn')
+                  setLoading(false)
+                }}
+              >
+                <Text style={{ color: 'white' }}>Log Out</Text>
+              </Button>
+            ) : (
+              <Button
+                rounded
+                info
+                style={{
+                  width: 46,
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  backgroundColor: '#3E69B9'
+                }}
+              >
+                <ActivityIndicator size="large" color="white" />
+              </Button>
+            )}
+          </View>
         </View>
       </View>
     </ScrollView>
