@@ -38,7 +38,7 @@ import SignUpScreen from '../pages/auth/SignUpScreen'
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 const ProfileStack = createStackNavigator()
-const PlayStack = createStackNavigator()
+const HomeStack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 
 export const AuthNavigator = () => (
@@ -50,8 +50,8 @@ export const AuthNavigator = () => (
 )
 export const HomeStackNavigator = ({ navigation }) => {
   return (
-    <PlayStack.Navigator>
-      <PlayStack.Screen
+    <HomeStack.Navigator>
+      <HomeStack.Screen
         options={{
           headerStyle: {
             backgroundColor: '#22273A'
@@ -72,9 +72,60 @@ export const HomeStackNavigator = ({ navigation }) => {
         name="Home"
         component={HomeScreen}
       />
-      <PlayStack.Screen name="UserDetails" component={UserDetails} />
-      <PlayStack.Screen name="SearchResults" component={SearchResults} />
-    </PlayStack.Navigator>
+      <HomeStack.Screen name="UserDetails" component={UserDetails} />
+      <HomeStack.Screen name="Notifications" component={Notifications} />
+      <HomeStack.Screen name="SearchResults" component={SearchResults} />
+      <HomeStack.Screen name="About" component={About} />
+      <HomeStack.Screen name="Privacy" component={Privacy} />
+      <HomeStack.Screen name="Contact" component={Contact} />
+    </HomeStack.Navigator>
+  )
+}
+export const ProfileStackNavigator = () => (
+  <ProfileStack.Navigator>
+    <ProfileStack.Screen
+      options={{
+        headerStyle: {
+          backgroundColor: '#22273A'
+        },
+        headerTintColor: 'white',
+        title: 'My Profile',
+        headerLeft: () => <FontAwesomeI name="user" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />,
+        headerRight: () => <FontAwesomeI name="pencil" size={25} color="#FABE0F" style={{ marginRight: 20 }} />
+      }}
+      name="Profile"
+      component={ProfileScreen}
+    />
+  </ProfileStack.Navigator>
+)
+
+const MainTabNavigator = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName
+
+          if (route.name === 'Home') {
+            iconName = focused ? 'ios-home' : 'ios-home-outline'
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person' : 'person-outline'
+          }
+          return <IoniconsI name={iconName} size={size} color={color} />
+        }
+      })}
+      tabBarOptions={{
+        activeTintColor: '#FABE0F',
+        inactiveBackgroundColor: '#23283B',
+        activeBackgroundColor: '#23283B',
+        style: { height: 60 },
+        labelStyle: { fontSize: 16, marginTop: -8 }
+      }}
+    >
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
+      <Tab.Screen name="Profile" component={ProfileStackNavigator} />
+    </Tab.Navigator>
   )
 }
 function CustomDrawerContent(props) {
@@ -188,62 +239,11 @@ export const DrawerNavigator = () => {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       overlayColor="transparent"
     >
-      <Drawer.Screen name="Home" component={HomeStackNavigator} />
-      <Drawer.Screen name="Search" component={SearchResults} />
-      <Drawer.Screen name="Contact" component={Contact} />
-      <Drawer.Screen name="Privacy" component={Privacy} />
-      <Drawer.Screen name="About" component={About} />
-      <Drawer.Screen name="Notifications" component={Notifications} />
+      <Drawer.Screen name="Home" component={MainTabNavigator} />
     </Drawer.Navigator>
   )
 }
-export const ProfileStackNavigator = () => (
-  <ProfileStack.Navigator>
-    <ProfileStack.Screen
-      options={{
-        headerStyle: {
-          backgroundColor: '#22273A'
-        },
-        headerTintColor: 'white',
-        title: 'My Profile',
-        headerLeft: () => <FontAwesomeI name="user" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />,
-        headerRight: () => <FontAwesomeI name="pencil" size={25} color="#FABE0F" style={{ marginRight: 20 }} />
-      }}
-      name="Profile"
-      component={ProfileScreen}
-    />
-  </ProfileStack.Navigator>
-)
 
-const MainTabNavigator = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName
-
-          if (route.name === 'Home') {
-            iconName = focused ? 'ios-home' : 'ios-home-outline'
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline'
-          }
-          return <IoniconsI name={iconName} size={size} color={color} />
-        }
-      })}
-      tabBarOptions={{
-        activeTintColor: '#FABE0F',
-        inactiveBackgroundColor: '#23283B',
-        activeBackgroundColor: '#23283B',
-        style: { height: 60 },
-        labelStyle: { fontSize: 16, marginTop: -8 }
-      }}
-    >
-      <Tab.Screen name="Home" component={DrawerNavigator} />
-      <Tab.Screen name="Profile" component={ProfileStackNavigator} />
-    </Tab.Navigator>
-  )
-}
 
 const MainContainer = () => {
   return (
@@ -261,7 +261,7 @@ const MainContainer = () => {
             headerShown: false
           })}
           name="Home"
-          component={MainTabNavigator}
+          component={DrawerNavigator}
         />
       </Stack.Navigator>
     </NavigationContainer>
