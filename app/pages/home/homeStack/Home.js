@@ -71,7 +71,7 @@ const App = () => {
           <ScrollView>
             <Card containerStyle={{ borderRadius: 10, padding: 0 }}>
               <Image
-                source={require('../../../assets/intro.jpg')}
+                source={require('../../../assets/sky.png')}
                 style={{
                   height: 200,
                   resizeMode: 'cover',
@@ -84,9 +84,9 @@ const App = () => {
                 The idea with React is more about component structure than actual design.
               </Text>
             </Card>
-            <Card containerStyle={{ borderRadius: 10, padding: 0 }}>
+            <Card containerStyle={{ borderRadius: 10, padding: 0,marginBottom:30 }}>
               <Image
-                source={require('../../../assets/intro.jpg')}
+                source={require('../../../assets/sky.png')}
                 style={{
                   height: 200,
                   resizeMode: 'cover',
