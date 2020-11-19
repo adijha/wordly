@@ -60,9 +60,9 @@ const App = () => {
           placeholder="Type Here..."
           value={search}
           lightTheme
-          inputStyle={{ backgroundColor:'white' }}
+          inputStyle={{ backgroundColor: 'white' }}
           // style={{backgroundColor:'red'}}
-          inputContainerStyle={{ backgroundColor:'white' }}
+          inputContainerStyle={{ backgroundColor: 'white' }}
         />
         {filteredDataSource.length > 0 ? (
           <FlatList
@@ -88,7 +88,7 @@ const App = () => {
                 The idea with React is more about component structure than actual design.
               </Text>
             </Card>
-            <Card containerStyle={{ borderRadius: 10, padding: 0,marginBottom:30 }}>
+            <Card containerStyle={{ borderRadius: 10, padding: 0 }}>
               <Image
                 source={require('../../../assets/sky.png')}
                 style={{
@@ -103,6 +103,7 @@ const App = () => {
                 The idea with React is more about component structure than actual design.
               </Text>
             </Card>
+            <View style={{ height: 100 }} />
           </ScrollView>
         )}
       </View>
