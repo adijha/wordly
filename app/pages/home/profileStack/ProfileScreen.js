@@ -15,13 +15,11 @@ const styles = StyleSheet.create({
     height: 80
   },
   avatar: {
-    width: 110,
-    height: 110,
+    width: 100,
+    height: 100,
     borderRadius: 63,
     borderWidth: 4,
     borderColor: 'white',
-    // marginBottom: 10,
-    // alignSelf: 'center',
     position: 'absolute',
     marginTop: 20,
     marginLeft: 20,
@@ -94,166 +92,158 @@ export default function Profile() {
     <ScrollView style={{ backgroundColor: '#ededed' }}>
       <Image style={styles.avatar} source={Img} />
       <View style={styles.header} />
-      <View style={styles.body}>
-        <View style={styles.bodyContent}>
-          <View style={[styles.card, { paddingTop: 50 }]}>
-            <Text style={styles.name}>Abhay Dubey</Text>
-            <Text style={{ fontSize: 14, marginVertical: 5 }}>React developer at mojitilabs, haryana India</Text>
-            <Text style={{ fontSize: 14, marginVertical: 2 }}>Jaipur National University . Mojitolabs</Text>
-            <Text style={{ fontSize: 14, marginVertical: 2 }}>Gurgaun, Haryana, India</Text>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>About</Text>
-            <Text style={{ fontSize: 14 }}>
-              I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
-              with it&apos;s battery I run my mac.
-            </Text>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Tags</Text>
-            <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-              <View style={styles.tag}>
-                <Text
-                  style={{
-                    color: '#555',
-
-                    fontSize: 14
-                  }}
-                >
-                  React.js
-                </Text>
-              </View>
-              <View style={styles.tag}>
-                <Text
-                  style={{
-                    color: '#555',
-
-                    fontSize: 14
-                  }}
-                >
-                  Redux.js
-                </Text>
-              </View>
-              <View style={styles.tag}>
-                <Text
-                  style={{
-                    color: '#555',
-
-                    fontSize: 14
-                  }}
-                >
-                  Node.js
-                </Text>
-              </View>
-              <View style={styles.tag}>
-                <Text
-                  style={{
-                    color: '#555',
-
-                    fontSize: 14
-                  }}
-                >
-                  Mongoose.js
-                </Text>
-              </View>
-              <View style={styles.tag}>
-                <Text
-                  style={{
-                    color: '#555',
-
-                    fontSize: 14
-                  }}
-                >
-                  Express.js
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Experience :</Text>
-
-            <Text style={{ fontSize: 18 }}>All Asia conc Developer</Text>
-            <Text>Mojitolabs</Text>
-            <Text style={{ color: '#222' }}>January 2020 - Present</Text>
-            <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
-            <View
+      <View style={[styles.card, { paddingTop: 48, marginTop: 0 }]}>
+        <Text style={styles.name}>Abhay Dubey</Text>
+        <Text style={{ fontSize: 14, marginVertical: 5 }}>React developer at mojitilabs, Haryana India</Text>
+        <Text style={{ fontSize: 14, marginVertical: 2 }}>Jaipur National University . Mojitolabs</Text>
+        <Text style={{ fontSize: 14, marginVertical: 2 }}>Gurgaun, Haryana, India</Text>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>About</Text>
+        <Text style={{ fontSize: 14 }}>
+          I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor, with
+          it&apos;s battery I run my mac.
+        </Text>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>Tags</Text>
+        <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
+          <View style={styles.tag}>
+            <Text
               style={{
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                marginVertical: 5
-              }}
-            />
-            <Text style={{ fontSize: 18 }}>Magic Developer</Text>
-            <Text>Mojitolabs</Text>
-            <Text style={{ color: '#222' }}>January 2020 - Present</Text>
-            <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
-          </View>
-          <View
-            style={{
-              borderBottomWidth: StyleSheet.hairlineWidth
-            }}
-          />
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Education :</Text>
+                color: '#555',
 
-            <Text style={{ fontSize: 18 }}>Bachelor of Engineering</Text>
-            <Text>Wanaarasiasassad</Text>
-            <Text style={{ color: '#222' }}>January 2020 - january 2020</Text>
-
-            <View
-              style={{
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                marginVertical: 5
-              }}
-            />
-            <Text style={{ fontSize: 18 }}>Magic Developer</Text>
-            <Text>Mojitolabs</Text>
-            <Text style={{ color: '#222' }}>January 2020 - Present</Text>
-          </View>
-          <View style={styles.card}>
-            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <SocialIcon type="facebook" style={styles.icon} />
-              <SocialIcon type="twitter" style={styles.icon} />
-              <SocialIcon type="linkedin" style={styles.icon} />
-            </View>
-          </View>
-          <View style={styles.card}>
-            <Button
-              full
-              rounded
-              info
-              style={{
-                backgroundColor: '#3E69B9',
-                marginVertical: 20
+                fontSize: 14
               }}
             >
-              <Text style={{ color: 'white' }}>Reset Password</Text>
-            </Button>
-            {!loading ? (
-              <Button
-                full
-                rounded
-                info
-                style={{
-                  backgroundColor: '#3E69B9'
-                }}
-                onPress={async () => {
-                  setLoading(true)
-                  await AsyncStorage.removeItem('token')
+              React.js
+            </Text>
+          </View>
+          <View style={styles.tag}>
+            <Text
+              style={{
+                color: '#555',
 
-                  setLoading(false)
-                  setIsLogged(false)
-                }}
-              >
-                <Text style={{ color: 'white' }}>Log Out</Text>
-              </Button>
-            ) : (
-              <Button rounded info style={styles.loadingButton}>
-                <ActivityIndicator size="large" color="white" />
-              </Button>
-            )}
+                fontSize: 14
+              }}
+            >
+              Redux.js
+            </Text>
+          </View>
+          <View style={styles.tag}>
+            <Text
+              style={{
+                color: '#555',
+
+                fontSize: 14
+              }}
+            >
+              Node.js
+            </Text>
+          </View>
+          <View style={styles.tag}>
+            <Text
+              style={{
+                color: '#555',
+
+                fontSize: 14
+              }}
+            >
+              Mongoose.js
+            </Text>
+          </View>
+          <View style={styles.tag}>
+            <Text
+              style={{
+                color: '#555',
+
+                fontSize: 14
+              }}
+            >
+              Express.js
+            </Text>
           </View>
         </View>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>Experience</Text>
+
+        <Text style={{ fontSize: 18 }}>All Asia conc Developer</Text>
+        <Text>Mojitolabs</Text>
+        <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+        <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
+        <View
+          style={{
+            borderBottomWidth: StyleSheet.hairlineWidth,
+            marginVertical: 5
+          }}
+        />
+        <Text style={{ fontSize: 18 }}>Magic Developer</Text>
+        <Text>Mojitolabs</Text>
+        <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+        <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>Education</Text>
+
+        <Text style={{ fontSize: 18 }}>Bachelor of Engineering</Text>
+        <Text>Wanaarasiasassad</Text>
+        <Text style={{ color: '#222' }}>January 2020 - january 2020</Text>
+
+        <View
+          style={{
+            borderBottomWidth: StyleSheet.hairlineWidth,
+            marginVertical: 5
+          }}
+        />
+        <Text style={{ fontSize: 18 }}>Magic Developer</Text>
+        <Text>Mojitolabs</Text>
+        <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+      </View>
+      <View style={styles.card}>
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+          <SocialIcon type="facebook" style={styles.icon} />
+          <SocialIcon type="twitter" style={styles.icon} />
+          <SocialIcon type="linkedin" style={styles.icon} />
+        </View>
+      </View>
+      <View style={styles.card}>
+        <Button
+          full
+          rounded
+          info
+          style={{
+            backgroundColor: '#3E69B9',
+            marginVertical: 20
+          }}
+        >
+          <Text style={{ color: 'white' }}>Reset Password</Text>
+        </Button>
+        {!loading ? (
+          <Button
+            full
+            rounded
+            info
+            style={{
+              backgroundColor: '#3E69B9'
+            }}
+            onPress={async () => {
+              setLoading(true)
+              await AsyncStorage.removeItem('token')
+
+              setLoading(false)
+              setIsLogged(false)
+            }}
+          >
+            <Text style={{ color: 'white' }}>Log Out</Text>
+          </Button>
+        ) : (
+          <Button rounded info style={styles.loadingButton}>
+            <ActivityIndicator size="large" color="white" />
+          </Button>
+        )}
       </View>
     </ScrollView>
   )
