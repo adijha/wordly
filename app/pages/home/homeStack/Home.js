@@ -59,6 +59,10 @@ const App = () => {
           onClear={() => setFilteredDataSource([])}
           placeholder="Type Here..."
           value={search}
+          lightTheme
+          inputStyle={{ backgroundColor:'white' }}
+          // style={{backgroundColor:'red'}}
+          inputContainerStyle={{ backgroundColor:'white' }}
         />
         {filteredDataSource.length > 0 ? (
           <FlatList
