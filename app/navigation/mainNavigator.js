@@ -46,8 +46,8 @@ const { width } = Dimensions.get('screen')
 export const AuthNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     {/* <Stack.Screen name="Loading" component={LoadingScreen} /> */}
-    <Stack.Screen name="SignIn" component={SignInScreen} />
     <Stack.Screen name="SignUp" component={SignUpScreen} />
+    <Stack.Screen name="SignIn" component={SignInScreen} />
   </Stack.Navigator>
 )
 export const HomeStackNavigator = ({ navigation }) => {

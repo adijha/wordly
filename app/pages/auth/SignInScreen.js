@@ -23,7 +23,7 @@ const { width } = Dimensions.get('screen')
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: width / 9
+    paddingHorizontal: width / 10
   },
   greeting: {
     marginTop: height / 30,

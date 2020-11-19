@@ -7,28 +7,32 @@ import {
   TouchableOpacity,
   Keyboard,
   ActivityIndicator,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native'
 import { Button } from 'native-base'
 import { SocialIcon } from 'react-native-elements'
 import AsyncStorage from '@react-native-community/async-storage'
 import AuthApi from '../../api/Auth'
 
+const { height, width } = Dimensions.get('screen')
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 39
+    paddingHorizontal: width / 10
   },
   greeting: {
-    marginTop: 32,
+    marginTop: height / 30,
     fontSize: 18,
     fontWeight: '400',
     textAlign: 'center'
   },
   errorMessage: {
-    height: 72,
+    height: height / 15,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    color: 'red'
     // marginHorizontal: 30,
   },
   error: {
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
   input: {
     borderBottomColor: '#8A8F9E',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    height: 40,
+    height: 35,
     fontSize: 15,
     color: '#161F3D'
   },
@@ -60,7 +64,8 @@ const styles = StyleSheet.create({
     height: 52,
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  icon: { width: height / 15, height: height / 15 }
 })
 
 export default function SignUpScreen(props) {
@@ -95,102 +100,98 @@ export default function SignUpScreen(props) {
 
   return (
     <ScrollView style={styles.container}>
-      {!space ? <View style={{ height: 65 }} /> : null}
+      {!space ? <View style={{ height: height / 15 }} /> : null}
       {!moreSpace ? <Text style={styles.greeting}> {'Hello,\nWelcome'} </Text> : null}
       <View style={styles.errorMessage}>
         {errorMessage ? <Text style={styles.error}> {errorMessage} </Text> : null}
       </View>
-      <View style={styles.form}>
-        <View>
-          <Text style={styles.inputTitle}> Full Name </Text>
-          <TextInput style={styles.input} autoCapitalize="none" onChangeText={(newName) => setName(newName)} />
-        </View>
-        <View
-          style={{
-            marginTop: 32
+      <View>
+        <Text style={styles.inputTitle}> Full Name </Text>
+        <TextInput style={styles.input} autoCapitalize="none" onChangeText={(newName) => setName(newName)} />
+      </View>
+      <View
+        style={{
+          marginTop: 32
+        }}
+      >
+        <Text style={styles.inputTitle}> Email Address </Text>
+        <TextInput
+          style={styles.input}
+          autoCapitalize="none"
+          onChangeText={(newEmail) => setEmail(newEmail)}
+          onFocus={() => setSpace(true)}
+          onSubmitEditing={() => setSpace(false)}
+        />
+      </View>
+      <View
+        style={{
+          marginTop: 32
+        }}
+      >
+        <Text style={styles.inputTitle}> Password </Text>
+        <TextInput
+          style={styles.input}
+          secureTextEntry
+          autoCapitalize="none"
+          onChangeText={(passwd) => setPassword(passwd)}
+          onFocus={() => {
+            setSpace(true)
+            setMoreSpace(true)
           }}
-        >
-          <Text style={styles.inputTitle}> Email Address </Text>
-          <TextInput
-            style={styles.input}
-            autoCapitalize="none"
-            onChangeText={(newEmail) => setEmail(newEmail)}
-            onFocus={() => setSpace(true)}
-            onSubmitEditing={() => setSpace(false)}
-          />
-        </View>
-        <View
-          style={{
-            marginTop: 32
+          onSubmitEditing={() => {
+            setSpace(false)
+            setMoreSpace(false)
           }}
-        >
-          <Text style={styles.inputTitle}> Password </Text>
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            autoCapitalize="none"
-            onChangeText={(passwd) => setPassword(passwd)}
-            onFocus={() => {
-              setSpace(true)
-              setMoreSpace(true)
-            }}
-            onSubmitEditing={() => {
-              setSpace(false)
-              setMoreSpace(false)
-            }}
-          />
-        </View>
-
-        {!loading ? (
-          <Button
-            full
-            rounded
-            info
-            style={{
-              backgroundColor: '#3E69B9',
-              marginTop: 27
-            }}
-            onPress={onSubmit}
-          >
-            <Text
-              style={{
-                color: '#FFF',
-                fontWeight: '500'
-              }}
-            >
-              Sign up
-            </Text>
-          </Button>
-        ) : (
-          <Button
-            rounded
-            info
-            style={{
-              width: 46,
-              justifyContent: 'center',
-              alignSelf: 'center',
-              backgroundColor: '#3E69B9',
-              marginTop: 27
-            }}
-          >
-            <ActivityIndicator size="large" color="white" />
-          </Button>
-        )}
+        />
       </View>
 
-      <Text style={{ fontSize: 14, alignSelf: 'center' }}>Or signup with</Text>
+      {!loading ? (
+        <Button
+          full
+          rounded
+          info
+          style={{
+            backgroundColor: '#3E69B9',
+            height: height / 16,
+            marginTop: 10
+          }}
+          onPress={onSubmit}
+        >
+          <Text
+            style={{
+              color: '#FFF',
+              fontWeight: '500'
+            }}
+          >
+            Sign up
+          </Text>
+        </Button>
+      ) : (
+        <Button
+          rounded
+          info
+          style={{
+            width: height / 19,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            backgroundColor: '#3E69B9',
+            height: height / 19
+          }}
+        >
+          <ActivityIndicator size="large" color="white" />
+        </Button>
+      )}
+      <Text style={{ fontSize: 14, marginVertical: 10, alignSelf: 'center' }}>Or Login with</Text>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-        <SocialIcon type="facebook" />
-
-        <SocialIcon type="google" />
-
-        <SocialIcon type="linkedin" />
+        <SocialIcon type="facebook" style={styles.icon} />
+        <SocialIcon type="google" style={styles.icon} />
+        <SocialIcon type="linkedin" style={styles.icon} />
       </View>
 
       <TouchableOpacity
         style={{
           alignSelf: 'center',
-          marginTop: 20
+          marginTop: height / 40
         }}
         onPress={() => {
           props.navigation.navigate('SignIn')
