@@ -24,7 +24,7 @@ export default function LoadingScreen(props) {
     // }, 1000)
   }, [props.navigation])
   useEffect(() => {
-    tryLogin()
+    // tryLogin()
   }, [tryLogin])
 
   return (

@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
 })
 export default function Profile(props) {
   const [loading, setLoading] = useState(false)
+
   return (
     <ScrollView style={{ backgroundColor: '#ededed' }}>
       <Image style={styles.avatar} source={Img} />

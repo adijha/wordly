@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { TouchableOpacity, Image, View, StyleSheet, ActivityIndicator } from 'react-native'
 
 import { Text, Button } from 'native-base'
@@ -19,7 +19,6 @@ import IoniconsI from 'react-native-vector-icons/Ionicons'
 import FontAwesomeI from 'react-native-vector-icons/FontAwesome'
 
 //Home
-//Play
 import HomeScreen from '../pages/home/homeStack/Home'
 import UserDetails from '../pages/home/homeStack/UserDetails'
 import SearchResults from '../pages/home/homeStack/SearchResults'
@@ -40,10 +39,10 @@ const Tab = createBottomTabNavigator()
 const ProfileStack = createStackNavigator()
 const HomeStack = createStackNavigator()
 const Drawer = createDrawerNavigator()
-
+export const User = React.createContext([])
 export const AuthNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Loading" component={LoadingScreen} />
+    {/* <Stack.Screen name="Loading" component={LoadingScreen} /> */}
     <Stack.Screen name="SignIn" component={SignInScreen} />
     <Stack.Screen name="SignUp" component={SignUpScreen} />
   </Stack.Navigator>
@@ -130,7 +129,7 @@ const MainTabNavigator = () => {
 }
 function CustomDrawerContent(props) {
   const [loading, setLoading] = useState(false)
-
+  const { setIsLogged } = useContext(User)
   return (
     <DrawerContentScrollView {...props}>
       <View style={{ borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 10, paddingBottom: 16 }}>
@@ -206,7 +205,7 @@ function CustomDrawerContent(props) {
           onPress={async () => {
             setLoading(true)
             await AsyncStorage.removeItem('token')
-            props.navigation.navigate('SignIn')
+            setIsLogged(false)
             setLoading(false)
           }}
         >
@@ -244,27 +243,70 @@ export const DrawerNavigator = () => {
   )
 }
 
-
-const MainContainer = () => {
+const MainContainer = (props) => {
+  const [loading, setLoading] = useState(true)
+  const [isLogged, setIsLogged] = useState(false)
+  const tryLogin = useCallback(async () => {
+    try {
+      const token = await AsyncStorage.getItem('token')
+      if (token) {
+        setIsLogged(true)
+      }
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }, [])
+  useEffect(() => {
+    tryLogin()
+  }, [tryLogin])
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
+    <User.Provider value={{ isLogged, setIsLogged }}>
+      <NavigationContainer {...props}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {/*         
+          <Stack.Screen
           options={() => ({
             headerShown: false
           })}
           name="Auth"
           component={AuthNavigator}
-        />
-        <Stack.Screen
+          />
+          <Stack.Screen
           options={() => ({
             headerShown: false
           })}
           name="Home"
           component={DrawerNavigator}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          /> 
+          
+        */}
+          {loading ? (
+            <Stack.Screen
+              name="Loading"
+              component={LoadingScreen}
+              options={() => ({
+                headerShown: false
+              })}
+            />
+          ) : (
+            <>
+              {isLogged ? (
+                <Stack.Screen
+                  options={() => ({
+                    headerShown: false
+                  })}
+                  name="Home"
+                  component={DrawerNavigator}
+                />
+              ) : (
+                <Stack.Screen name="Auth" component={AuthNavigator} />
+              )}
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </User.Provider>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   View,
   Text,
@@ -15,6 +15,8 @@ import { SocialIcon } from 'react-native-elements'
 import { Button } from 'native-base'
 import AuthApi from '../../api/Auth'
 
+import { User } from '../../navigation/mainNavigator'
+
 const { height } = Dimensions.get('screen')
 const { width } = Dimensions.get('screen')
 
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   errorMessage: {
-    height: height / 20,
+    height: height / 15,
     alignItems: 'center',
     justifyContent: 'center',
     color: 'red'
@@ -76,6 +78,8 @@ export default function SignInScreen(props) {
   const [errorMessage, setErrorMessage] = useState(null)
   const [loading, setLoading] = useState(false)
   const [space, setSpace] = useState(false)
+  const { setIsLogged } = useContext(User)
+
   const onSubmit = async (event) => {
     event.preventDefault()
     setSpace(false)
@@ -88,11 +92,10 @@ export default function SignInScreen(props) {
         const response = await AuthApi.post('/signin', { email, password })
         await AsyncStorage.setItem('token', response.data.token)
         setLoading(false)
-        props.navigation.navigate('Home')
+        setIsLogged(true)
       } catch (err) {
         setErrorMessage('Something went wrong')
         setLoading(false)
-        // console.log('Error', err)
       }
     }
   }
@@ -116,7 +119,7 @@ export default function SignInScreen(props) {
       </View>
       <View
         style={{
-          marginVertical: height / 25
+          marginVertical: height / 20
         }}
       >
         <Text style={styles.inputTitle}> Password </Text>
@@ -136,7 +139,8 @@ export default function SignInScreen(props) {
           rounded
           info
           style={{
-            backgroundColor: '#3E69B9'
+            backgroundColor: '#3E69B9',
+            height: height / 16
           }}
           onPress={onSubmit}
         >
@@ -154,10 +158,11 @@ export default function SignInScreen(props) {
           rounded
           info
           style={{
-            width: 46,
+            width: height / 13,
             justifyContent: 'center',
             alignSelf: 'center',
-            backgroundColor: '#3E69B9'
+            backgroundColor: '#3E69B9',
+            height: height / 13
           }}
         >
           <ActivityIndicator size="large" color="white" />
@@ -196,7 +201,7 @@ export default function SignInScreen(props) {
       <TouchableOpacity
         style={{
           alignSelf: 'center',
-          marginTop: 42
+          marginTop: height / 24
         }}
         onPress={() => {
           props.navigation.navigate('SignUp')
