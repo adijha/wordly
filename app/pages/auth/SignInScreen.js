@@ -158,11 +158,11 @@ export default function SignInScreen(props) {
           rounded
           info
           style={{
-            width: height / 19,
+            width: height / 17,
             justifyContent: 'center',
             alignSelf: 'center',
             backgroundColor: '#3E69B9',
-            height: height / 19
+            height: height / 17
           }}
         >
           <ActivityIndicator size="large" color="white" />

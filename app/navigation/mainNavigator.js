@@ -28,6 +28,7 @@ import Privacy from '../pages/home/homeStack/Privacy'
 import About from '../pages/home/homeStack/About'
 //Profile
 import ProfileScreen from '../pages/home/profileStack/ProfileScreen'
+import EditProfile from '../pages/home/profileStack/EditProfile'
 //auth
 import LoadingScreen from '../pages/auth/LoadingScreen'
 import SignInScreen from '../pages/auth/SignInScreen'
@@ -87,9 +88,9 @@ export const HomeStackNavigator = ({ navigation }) => {
       <HomeStack.Screen name="UserDetails" component={UserDetails} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="SearchResults" component={SearchResults} />
-      <HomeStack.Screen name="About" component={About} />
-      <HomeStack.Screen name="Contact" component={Contact} />
-      <HomeStack.Screen name="Privacy" component={Privacy} />
+      <HomeStack.Screen name="About Us" component={About} />
+      <HomeStack.Screen name="Contact Us" component={Contact} />
+      <HomeStack.Screen name="Privacy Policy" component={Privacy} />
     </HomeStack.Navigator>
   )
 }
@@ -112,11 +113,16 @@ export const ProfileStackNavigator = (props) => (
             />
           </TouchableOpacity>
         ),
-        headerRight: () => <FontAwesomeI name="pencil" size={25} style={{ marginRight: 20 }} />
+        headerRight: () => (
+          <TouchableOpacity onPress={() => props.navigation.navigate('Edit Profile')}>
+            <FontAwesomeI name="pencil" size={25} style={{ marginRight: 20 }} />
+          </TouchableOpacity>
+        )
       }}
       name="Profile"
       component={ProfileScreen}
     />
+    <ProfileStack.Screen name="Edit Profile" component={EditProfile} />
   </ProfileStack.Navigator>
 )
 
@@ -127,7 +133,6 @@ const MainTabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName
-
           if (route.name === 'Home') {
             iconName = focused ? 'ios-home' : 'ios-home-outline'
           } else if (route.name === 'Profile') {
@@ -205,15 +210,15 @@ function CustomDrawerContent(props) {
       <DrawerItem
         label="About Us"
         onPress={() => {
-          props.navigation.navigate('About')
+          props.navigation.navigate('About Us')
           props.navigation.closeDrawer()
         }}
         icon={({ color, size }) => <IoniconsI name="md-people-outline" size={size} color={color} />}
       />
       <DrawerItem
-        label="Contact"
+        label="Contact Us"
         onPress={() => {
-          props.navigation.navigate('Contact')
+          props.navigation.navigate('Contact Us')
           props.navigation.closeDrawer()
         }}
         icon={({ color, size }) => <IoniconsI name="call-outline" size={size} color={color} />}
@@ -221,7 +226,7 @@ function CustomDrawerContent(props) {
       <DrawerItem
         label="Privacy Policy"
         onPress={() => {
-          props.navigation.navigate('Privacy')
+          props.navigation.navigate('Privacy Policy')
           props.navigation.closeDrawer()
         }}
         icon={({ color, size }) => <IoniconsI name="lock-closed-outline" size={size} color={color} />}
