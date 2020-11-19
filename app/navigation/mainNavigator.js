@@ -129,7 +129,7 @@ export const ProfileStackNavigator = (props) => (
 const MainTabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      // initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName
@@ -149,8 +149,8 @@ const MainTabNavigator = () => {
         labelStyle: { fontSize: 16, marginTop: -8 }
       }}
     >
-      <Tab.Screen name="Home" component={HomeStackNavigator} />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
     </Tab.Navigator>
   )
 }

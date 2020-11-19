@@ -168,39 +168,72 @@ export default function Profile() {
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Experience</Text>
-
-        <Text style={{ fontSize: 18 }}>All Asia conc Developer</Text>
-        <Text>Mojitolabs</Text>
-        <Text style={{ color: '#222' }}>January 2020 - Present</Text>
-        <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
         <View
           style={{
-            borderBottomWidth: StyleSheet.hairlineWidth,
-            marginVertical: 5
+            flexDirection: 'row',
+            marginBottom: 10
           }}
-        />
-        <Text style={{ fontSize: 18 }}>Magic Developer</Text>
-        <Text>Mojitolabs</Text>
-        <Text style={{ color: '#222' }}>January 2020 - Present</Text>
-        <Text style={{ fontSize: 14, color: '#555' }}>Remote</Text>
+        >
+          <View>
+            <Image
+              style={{ width: 50, height: 50, resizeMode: 'contain', marginRight: 10 }}
+              source={require('../../../assets/logo.jpeg')}
+            />
+          </View>
+          <View
+            style={{
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              flex: 1,
+              paddingBottom: 10
+            }}
+          >
+            <Text style={{ fontSize: 17 }}>All Asia conc Developer</Text>
+            <Text style={{ fontSize: 15 }}>Mojitolabs</Text>
+            <Text style={{ color: '#222', fontSize: 14 }}>January 2020 - Present</Text>
+          </View>
+        </View>
+
+        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+          <View>
+            <Image
+              style={{ width: 50, height: 50, resizeMode: 'contain', marginRight: 10 }}
+              source={require('../../../assets/logo.jpeg')}
+            />
+          </View>
+          <View>
+            <Text style={{ fontSize: 17 }}>All Asia conc Developer</Text>
+            <Text style={{ fontSize: 15 }}>Mojitolabs</Text>
+            <Text style={{ color: '#222', fontSize: 14 }}>January 2020 - Present</Text>
+          </View>
+        </View>
       </View>
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Education</Text>
-
-        <Text style={{ fontSize: 18 }}>Bachelor of Engineering</Text>
-        <Text>Wanaarasiasassad</Text>
-        <Text style={{ color: '#222' }}>January 2020 - january 2020</Text>
-
         <View
           style={{
-            borderBottomWidth: StyleSheet.hairlineWidth,
-            marginVertical: 5
+            flexDirection: 'row',
+            marginBottom: 10
           }}
-        />
-        <Text style={{ fontSize: 18 }}>Magic Developer</Text>
-        <Text>Mojitolabs</Text>
-        <Text style={{ color: '#222' }}>January 2020 - Present</Text>
+        >
+          <View>
+            <Image
+              style={{ width: 50, height: 50, resizeMode: 'contain', marginRight: 10 }}
+              source={require('../../../assets/logo.jpeg')}
+            />
+          </View>
+          <View
+            style={{
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              flex: 1,
+              paddingBottom: 10
+            }}
+          >
+            <Text style={{ fontSize: 17 }}>Bachelor of Engineering</Text>
+            <Text style={{ fontSize: 15 }}>IIT, Nepal</Text>
+            <Text style={{ color: '#222', fontSize: 14 }}>January 2020 - Present</Text>
+          </View>
+        </View>
       </View>
       <View style={styles.card}>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
