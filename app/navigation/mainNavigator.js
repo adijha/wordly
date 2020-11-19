@@ -134,7 +134,7 @@ const MainTabNavigator = () => {
         }
       })}
       tabBarOptions={{
-        activeTintColor: "#3E69B9",
+        activeTintColor: '#3E69B9',
         // inactiveBackgroundColor: '#23283B',
         // activeBackgroundColor: '#23283B',
         style: { height: 60 },
@@ -165,7 +165,7 @@ function CustomDrawerContent(props) {
             margin: 20
           }}
         />
-        <Text style={{ fontSize: 18, marginLeft: 20, marginVertical: 7 }}>Bhaskar Diwakar Chaudhary</Text>
+        <Text style={{ fontSize: 18, marginLeft: 20, marginVertical: 7 }}>Abhay Dubey</Text>
         <TouchableOpacity
           onPress={() => {
             props.navigation.navigate('Profile')

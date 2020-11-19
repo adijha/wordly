@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react'
-import { StyleSheet, View, Image, ActivityIndicator, ScrollView } from 'react-native'
+import { StyleSheet, View, Image, ActivityIndicator, ScrollView, Dimensions } from 'react-native'
 import { Text, Button } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
+import { SocialIcon } from 'react-native-elements'
+//
 import { User } from '../../../navigation/mainNavigator'
 
 import Img from '../../../assets/profile.jpg'
 
+const { height } = Dimensions.get('screen')
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#3E69B9',
@@ -65,7 +68,23 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     paddingHorizontal: 15,
     margin: 5
-  }
+  },
+  icon: { width: height / 18, height: height / 18 },
+  loadingButton: {
+    width: 46,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#3E69B9'
+  },
+  card: {
+    alignSelf: 'center',
+    backgroundColor: '#fff',
+    width: '100%',
+    paddingHorizontal: 30,
+    marginTop: 5,
+    paddingVertical: 18
+  },
+  cardTitle: { fontSize: 16, marginBottom: 8 }
 })
 export default function Profile() {
   const [loading, setLoading] = useState(false)
@@ -77,48 +96,21 @@ export default function Profile() {
       <View style={styles.header} />
       <View style={styles.body}>
         <View style={styles.bodyContent}>
-          <View style={{ alignSelf: 'center', backgroundColor: '#fff', width: '100%', padding: 30, paddingTop: 50 }}>
-            <Text style={styles.name}>Bhaskar Diwakar Chaudhary</Text>
-            <Text style={{ fontSize: 14, marginVertical: 5 }}>
-              I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
-              with it&apos;s battery I run my mac.
-            </Text>
-            {/* <View
-              style={{
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                marginVertical: 15
-              }}
-            /> */}
+          <View style={[styles.card, { paddingTop: 50 }]}>
+            <Text style={styles.name}>Abhay Dubey</Text>
+            <Text style={{ fontSize: 14, marginVertical: 5 }}>React developer at mojitilabs, haryana India</Text>
             <Text style={{ fontSize: 14, marginVertical: 2 }}>Jaipur National University . Mojitolabs</Text>
             <Text style={{ fontSize: 14, marginVertical: 2 }}>Gurgaun, Haryana, India</Text>
           </View>
-          <View
-            style={{
-              alignSelf: 'center',
-              backgroundColor: '#fff',
-              width: '100%',
-              paddingHorizontal: 30,
-              marginTop: 10,
-              paddingVertical: 18
-            }}
-          >
-            <Text style={{ fontSize: 16, marginBottom: 8 }}>About</Text>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>About</Text>
             <Text style={{ fontSize: 14 }}>
               I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor,
               with it&apos;s battery I run my mac.
             </Text>
           </View>
-          <View
-            style={{
-              alignSelf: 'center',
-              backgroundColor: '#fff',
-              width: '100%',
-              paddingHorizontal: 30,
-              marginTop: 10,
-              paddingVertical: 18
-            }}
-          >
-            <Text style={{ fontSize: 16, marginTop: 10 }}>Skills</Text>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Tags</Text>
             <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
               <View style={styles.tag}>
                 <Text
@@ -178,17 +170,8 @@ export default function Profile() {
             </View>
           </View>
 
-          <View
-            style={{
-              alignSelf: 'center',
-              backgroundColor: '#fff',
-              width: '100%',
-              paddingHorizontal: 30,
-              marginTop: 10,
-              paddingVertical: 18
-            }}
-          >
-            <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 5, fontWeight: '700' }}>Experience :</Text>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Experience :</Text>
 
             <Text style={{ fontSize: 18 }}>All Asia conc Developer</Text>
             <Text>Mojitolabs</Text>
@@ -210,17 +193,8 @@ export default function Profile() {
               borderBottomWidth: StyleSheet.hairlineWidth
             }}
           />
-          <View
-            style={{
-              alignSelf: 'center',
-              backgroundColor: '#fff',
-              width: '100%',
-              paddingHorizontal: 30,
-              // marginTop: 10,
-              paddingVertical: 18
-            }}
-          >
-            <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 5, fontWeight: '700' }}>Education :</Text>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Education :</Text>
 
             <Text style={{ fontSize: 18 }}>Bachelor of Engineering</Text>
             <Text>Wanaarasiasassad</Text>
@@ -236,23 +210,21 @@ export default function Profile() {
             <Text>Mojitolabs</Text>
             <Text style={{ color: '#222' }}>January 2020 - Present</Text>
           </View>
-          <View
-            style={{
-              alignSelf: 'center',
-              backgroundColor: '#fff',
-              width: '100%',
-              paddingHorizontal: 30,
-              marginTop: 10,
-              paddingVertical: 18
-            }}
-          >
+          <View style={styles.card}>
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+              <SocialIcon type="facebook" style={styles.icon} />
+              <SocialIcon type="twitter" style={styles.icon} />
+              <SocialIcon type="linkedin" style={styles.icon} />
+            </View>
+          </View>
+          <View style={styles.card}>
             <Button
               full
               rounded
               info
               style={{
                 backgroundColor: '#3E69B9',
-                marginVertical: 30
+                marginVertical: 20
               }}
             >
               <Text style={{ color: 'white' }}>Reset Password</Text>
@@ -276,16 +248,7 @@ export default function Profile() {
                 <Text style={{ color: 'white' }}>Log Out</Text>
               </Button>
             ) : (
-              <Button
-                rounded
-                info
-                style={{
-                  width: 46,
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  backgroundColor: '#3E69B9'
-                }}
-              >
+              <Button rounded info style={styles.loadingButton}>
                 <ActivityIndicator size="large" color="white" />
               </Button>
             )}
