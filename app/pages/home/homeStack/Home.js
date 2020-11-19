@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SafeAreaView, Text, StyleSheet, View, FlatList, Image, ScrollView } from 'react-native'
+import { Dimensions, SafeAreaView, Text, StyleSheet, View, FlatList, Image, ScrollView } from 'react-native'
 import axios from 'axios'
 import { Card, SearchBar } from 'react-native-elements'
 
@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     padding: 10
   }
 })
+const { height } = Dimensions.get('screen')
 
 const App = () => {
   const [search, setSearch] = useState('')
@@ -77,7 +78,7 @@ const App = () => {
               <Image
                 source={require('../../../assets/sky.png')}
                 style={{
-                  height: 200,
+                  height: height / 4,
                   resizeMode: 'cover',
                   width: '100%',
                   borderTopRightRadius: 10,
@@ -92,7 +93,7 @@ const App = () => {
               <Image
                 source={require('../../../assets/sky.png')}
                 style={{
-                  height: 200,
+                  height: height / 4,
                   resizeMode: 'cover',
                   width: '100%',
                   borderTopRightRadius: 10,
