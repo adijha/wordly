@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Image, ActivityIndicator, ScrollView } from 'react-native'
 import { Text, Button } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
+import { User } from '../../../navigation/mainNavigator'
+
 import Img from '../../../assets/profile.jpg'
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "#3E69B9",
+    backgroundColor: '#3E69B9',
     height: 80
   },
   avatar: {
@@ -65,8 +67,9 @@ const styles = StyleSheet.create({
     margin: 5
   }
 })
-export default function Profile(props) {
+export default function Profile() {
   const [loading, setLoading] = useState(false)
+  const { setIsLogged } = useContext(User)
 
   return (
     <ScrollView style={{ backgroundColor: '#ededed' }}>
@@ -265,8 +268,9 @@ export default function Profile(props) {
                 onPress={async () => {
                   setLoading(true)
                   await AsyncStorage.removeItem('token')
-                  props.navigation.navigate('SignIn')
+
                   setLoading(false)
+                  setIsLogged(false)
                 }}
               >
                 <Text style={{ color: 'white' }}>Log Out</Text>
