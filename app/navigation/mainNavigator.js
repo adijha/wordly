@@ -85,8 +85,8 @@ export const HomeStackNavigator = ({ navigation }) => {
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="SearchResults" component={SearchResults} />
       <HomeStack.Screen name="About" component={About} />
-      <HomeStack.Screen name="Privacy" component={Privacy} />
       <HomeStack.Screen name="Contact" component={Contact} />
+      <HomeStack.Screen name="Privacy" component={Privacy} />
     </HomeStack.Navigator>
   )
 }
