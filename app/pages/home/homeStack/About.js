@@ -3,7 +3,7 @@ import { View, Text, Image } from 'react-native'
 
 export default function About() {
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
+    <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center',paddingHorizontal:25 }}>
       <Image source={require('../../../assets/logo.jpeg')} style={{ width: 100, height: 100 }} />
       <Text style={{ fontSize: 18, marginVertical: 20 }}>Wordly, Private Limited</Text>
       <Text style={{ textAlign: 'center' }}>
