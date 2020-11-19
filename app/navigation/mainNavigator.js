@@ -53,18 +53,28 @@ export const HomeStackNavigator = ({ navigation }) => {
       <HomeStack.Screen
         options={{
           headerStyle: {
-            backgroundColor: '#22273A'
+            // backgroundColor: '#22273A'
           },
-          headerTintColor: 'white',
+          // headerTintColor: "#3E69B9",
           title: 'Wordly',
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <IoniconsI name="cube-outline" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />
+              <IoniconsI
+                name="menu"
+                size={30}
+                // color="#3E69B9"
+                style={{ marginLeft: 22 }}
+              />
             </TouchableOpacity>
           ),
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
-              <FontAwesomeI name="bell" size={25} color="#FABE0F" style={{ marginRight: 20 }} />
+              <FontAwesomeI
+                name="bell"
+                size={25}
+                // color="#154fbd"
+                style={{ marginRight: 20 }}
+              />
             </TouchableOpacity>
           )
         }}
@@ -80,17 +90,26 @@ export const HomeStackNavigator = ({ navigation }) => {
     </HomeStack.Navigator>
   )
 }
-export const ProfileStackNavigator = () => (
+export const ProfileStackNavigator = (props) => (
   <ProfileStack.Navigator>
     <ProfileStack.Screen
       options={{
         headerStyle: {
-          backgroundColor: '#22273A'
+          // backgroundColor: "#3E69B9"
         },
-        headerTintColor: 'white',
+        // headerTintColor: 'white',
         title: 'My Profile',
-        headerLeft: () => <FontAwesomeI name="user" size={30} color="#FABE0F" style={{ marginLeft: 22 }} />,
-        headerRight: () => <FontAwesomeI name="pencil" size={25} color="#FABE0F" style={{ marginRight: 20 }} />
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
+            <IoniconsI
+              name="menu"
+              size={30}
+              // color="#FABE0F"
+              style={{ marginLeft: 22 }}
+            />
+          </TouchableOpacity>
+        ),
+        headerRight: () => <FontAwesomeI name="pencil" size={25} style={{ marginRight: 20 }} />
       }}
       name="Profile"
       component={ProfileScreen}
@@ -115,9 +134,9 @@ const MainTabNavigator = () => {
         }
       })}
       tabBarOptions={{
-        activeTintColor: '#FABE0F',
-        inactiveBackgroundColor: '#23283B',
-        activeBackgroundColor: '#23283B',
+        activeTintColor: "#3E69B9",
+        // inactiveBackgroundColor: '#23283B',
+        // activeBackgroundColor: '#23283B',
         style: { height: 60 },
         labelStyle: { fontSize: 16, marginTop: -8 }
       }}
@@ -264,23 +283,6 @@ const MainContainer = (props) => {
     <User.Provider value={{ isLogged, setIsLogged }}>
       <NavigationContainer {...props}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {/*         
-          <Stack.Screen
-          options={() => ({
-            headerShown: false
-          })}
-          name="Auth"
-          component={AuthNavigator}
-          />
-          <Stack.Screen
-          options={() => ({
-            headerShown: false
-          })}
-          name="Home"
-          component={DrawerNavigator}
-          /> 
-          
-        */}
           {loading ? (
             <Stack.Screen
               name="Loading"

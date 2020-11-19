@@ -6,7 +6,7 @@ import Img from '../../../assets/profile.jpg'
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#22273A',
+    backgroundColor: "#3E69B9",
     height: 80
   },
   avatar: {
