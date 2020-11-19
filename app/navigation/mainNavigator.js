@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect, useCallback, useContext } from 'react'
-import { TouchableOpacity, Image, View, StyleSheet, ActivityIndicator } from 'react-native'
+import { TouchableOpacity, Image, View, StyleSheet, ActivityIndicator, Dimensions } from 'react-native'
 
 import { Text, Button } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -40,6 +40,9 @@ const ProfileStack = createStackNavigator()
 const HomeStack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 export const User = React.createContext([])
+
+const { height } = Dimensions.get('screen')
+const { width } = Dimensions.get('screen')
 export const AuthNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     {/* <Stack.Screen name="Loading" component={LoadingScreen} /> */}
@@ -151,7 +154,15 @@ function CustomDrawerContent(props) {
   const { setIsLogged } = useContext(User)
   return (
     <DrawerContentScrollView {...props}>
-      <View style={{ borderBottomWidth: StyleSheet.hairlineWidth, marginBottom: 10, paddingBottom: 16 }}>
+      <View
+        style={{
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          marginBottom: 10,
+          paddingBottom: 16,
+          marginTop: -10,
+          backgroundColor: '#3E69B9'
+        }}
+      >
         <Image
           source={require('../assets/profile.jpg')}
           style={{
@@ -159,35 +170,37 @@ function CustomDrawerContent(props) {
             height: 80,
             borderRadius: 63,
             borderWidth: 4,
-            borderColor: 'white',
+            borderColor: '#073977',
             marginBottom: 10,
-            // alignSelf: 'center',
             margin: 20
           }}
         />
-        <Text style={{ fontSize: 18, marginLeft: 20, marginVertical: 7 }}>Abhay Dubey</Text>
+        <Text style={{ fontSize: 18, marginLeft: 20, marginVertical: 7, color: '#fff' }}>Abhay Dubey</Text>
+        <Text style={{ fontSize: 14, marginLeft: 20, marginBottom: 7, color: '#d3d3d3' }}>abhay@wordly.in</Text>
         <TouchableOpacity
           onPress={() => {
             props.navigation.navigate('Profile')
             props.navigation.closeDrawer()
           }}
         >
-          <Text style={{ fontSize: 16, marginLeft: 20, color: 'blue' }}>View Profile</Text>
+          <Text style={{ fontSize: 15, marginLeft: 20, color: 'white' }}>View Profile</Text>
         </TouchableOpacity>
       </View>
-      <DrawerItem
+      {/* <DrawerItem
         label="Home"
         onPress={() => {
           props.navigation.navigate('Home')
           props.navigation.closeDrawer()
         }}
-      />
+        icon={({ color, size }) => <IoniconsI name="ios-home-outline" size={size} color={color} />}
+      /> */}
       <DrawerItem
         label="Notifications"
         onPress={() => {
           props.navigation.navigate('Notifications')
           props.navigation.closeDrawer()
         }}
+        icon={({ color, size }) => <IoniconsI name="md-notifications-outline" size={size} color={color} />}
       />
       <DrawerItem
         label="About Us"
@@ -195,6 +208,7 @@ function CustomDrawerContent(props) {
           props.navigation.navigate('About')
           props.navigation.closeDrawer()
         }}
+        icon={({ color, size }) => <IoniconsI name="md-people-outline" size={size} color={color} />}
       />
       <DrawerItem
         label="Contact"
@@ -202,6 +216,7 @@ function CustomDrawerContent(props) {
           props.navigation.navigate('Contact')
           props.navigation.closeDrawer()
         }}
+        icon={({ color, size }) => <IoniconsI name="call-outline" size={size} color={color} />}
       />
       <DrawerItem
         label="Privacy Policy"
@@ -209,6 +224,7 @@ function CustomDrawerContent(props) {
           props.navigation.navigate('Privacy')
           props.navigation.closeDrawer()
         }}
+        icon={({ color, size }) => <IoniconsI name="lock-closed-outline" size={size} color={color} />}
       />
       {!loading ? (
         <Button
@@ -217,9 +233,10 @@ function CustomDrawerContent(props) {
           info
           style={{
             backgroundColor: '#3E69B9',
-            width: 200,
+            width: width / 1.8,
             marginLeft: 15,
-            marginTop: 30
+            marginTop: height / 25,
+            height: height / 19
           }}
           onPress={async () => {
             setLoading(true)
@@ -253,7 +270,7 @@ export const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
-      // openByDefault
+      openByDefault
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       overlayColor="transparent"
     >
