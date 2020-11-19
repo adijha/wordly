@@ -7,26 +7,30 @@ import {
   TouchableOpacity,
   Keyboard,
   ActivityIndicator,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import { SocialIcon } from 'react-native-elements'
 import { Button } from 'native-base'
 import AuthApi from '../../api/Auth'
 
+const { height } = Dimensions.get('screen')
+const { width } = Dimensions.get('screen')
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 39
+    paddingHorizontal: width / 9
   },
   greeting: {
-    marginTop: 32,
+    marginTop: height / 30,
     fontSize: 18,
     fontWeight: '400',
     textAlign: 'center'
   },
   errorMessage: {
-    height: 72,
+    height: height / 20,
     alignItems: 'center',
     justifyContent: 'center',
     color: 'red'
@@ -61,10 +65,12 @@ const styles = StyleSheet.create({
     height: 52,
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  icon: { width: height / 15, height: height / 15 }
 })
 
 export default function SignInScreen(props) {
+  // console.log(height/20)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
@@ -93,31 +99,35 @@ export default function SignInScreen(props) {
 
   return (
     <ScrollView style={styles.container}>
-      {!space ? <View style={{ height: 65 }} /> : null}
+      {!space ? <View style={{ height: height / 15 }} /> : null}
       <Text style={styles.greeting}> {'Hello again.\nWelcome back.'} </Text>
       <View style={styles.errorMessage}>
         {errorMessage ? <Text style={styles.error}> {errorMessage} </Text> : null}
       </View>
-      <View style={styles.form}>
-        <View>
-          <Text style={styles.inputTitle}> Email Address </Text>
-          <TextInput style={styles.input} autoCapitalize="none" onChangeText={(newEmail) => setEmail(newEmail)} />
-        </View>
-        <View
-          style={{
-            marginTop: 32
-          }}
-        >
-          <Text style={styles.inputTitle}> Password </Text>
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            autoCapitalize="none"
-            onChangeText={(passwd) => setPassword(passwd)}
-            onFocus={() => setSpace(true)}
-            onSubmitEditing={() => setSpace(false)}
-          />
-        </View>
+      <View>
+        <Text style={styles.inputTitle}> Email Address </Text>
+        <TextInput
+          style={styles.input}
+          autoCapitalize="none"
+          onChangeText={(newEmail) => setEmail(newEmail)}
+          onFocus={() => setSpace(true)}
+          onSubmitEditing={() => setSpace(false)}
+        />
+      </View>
+      <View
+        style={{
+          marginVertical: height / 25
+        }}
+      >
+        <Text style={styles.inputTitle}> Password </Text>
+        <TextInput
+          style={styles.input}
+          secureTextEntry
+          autoCapitalize="none"
+          onChangeText={(passwd) => setPassword(passwd)}
+          onFocus={() => setSpace(true)}
+          onSubmitEditing={() => setSpace(false)}
+        />
       </View>
 
       {!loading ? (
@@ -178,11 +188,9 @@ export default function SignInScreen(props) {
 
       <Text style={{ fontSize: 14, marginVertical: 10, alignSelf: 'center' }}>Or Login with</Text>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-        <SocialIcon type="facebook" />
-
-        <SocialIcon type="google" />
-
-        <SocialIcon type="linkedin" />
+        <SocialIcon type="facebook" style={styles.icon} />
+        <SocialIcon type="google" style={styles.icon} />
+        <SocialIcon type="linkedin" style={styles.icon} />
       </View>
 
       <TouchableOpacity
