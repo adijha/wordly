@@ -13,6 +13,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage'
 import { SocialIcon } from 'react-native-elements'
 import { Button } from 'native-base'
+import { GoogleSignin } from '@react-native-community/google-signin'
 import AuthApi from '../../api/Auth'
 
 import { User } from '../../navigation/mainNavigator'
@@ -77,6 +78,7 @@ export default function SignInScreen(props) {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [sloading, setSloading] = useState(false)
   const [space, setSpace] = useState(false)
   const { setIsLogged } = useContext(User)
 
@@ -84,8 +86,8 @@ export default function SignInScreen(props) {
     event.preventDefault()
     setSpace(false)
     setLoading(true)
-    if (email.length < 6 || password.length < 6) {
-      setErrorMessage('Fill out the form')
+    if (password.length < 6) {
+      setErrorMessage('Password be at least 6 letters')
       setLoading(false)
     } else {
       try {
@@ -100,6 +102,18 @@ export default function SignInScreen(props) {
     }
   }
 
+  const gsignin = async () => {
+    setSloading(true)
+    await GoogleSignin.hasPlayServices()
+    const { user } = await GoogleSignin.signIn()
+    const response = await AuthApi.post('/login.php', { email: user.email, token: user.id })
+    await AsyncStorage.setItem('photo', user.photo)
+    await AsyncStorage.setItem('token', response.data.userid)
+    setSloading(false)
+    setIsLogged(true)
+
+  }
+  
   return (
     <ScrollView style={styles.container}>
       {!space ? <View style={{ height: height / 15 }} /> : null}
@@ -194,7 +208,7 @@ export default function SignInScreen(props) {
       <Text style={{ fontSize: 14, marginVertical: 10, alignSelf: 'center' }}>Or Login with</Text>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
         <SocialIcon type="facebook" style={styles.icon} />
-        <SocialIcon type="google" style={styles.icon} />
+        <SocialIcon type="google" style={styles.icon} onPress={() => gsignin()} disabled={sloading} />
         <SocialIcon type="linkedin" style={styles.icon} />
       </View>
 

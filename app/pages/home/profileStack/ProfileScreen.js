@@ -87,10 +87,16 @@ const styles = StyleSheet.create({
 export default function Profile() {
   const [loading, setLoading] = useState(false)
   const { setIsLogged } = useContext(User)
+  const [photo, setPhoto] = useState(null)
+  const getPhoto = async () => {
+    const asyncPhoto = await AsyncStorage.getItem('photo')
+    setPhoto({ uri: asyncPhoto })
+  }
+  getPhoto()
 
   return (
     <ScrollView style={{ backgroundColor: '#ededed' }}>
-      <Image style={styles.avatar} source={Img} />
+      <Image style={styles.avatar} source={photo || Img} />
       <View style={styles.header} />
       <View style={[styles.card, { paddingTop: 48, marginTop: 0 }]}>
         <Text style={styles.name}>Abhay Dubey</Text>

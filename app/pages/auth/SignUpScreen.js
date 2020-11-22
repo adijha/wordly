@@ -13,6 +13,7 @@ import {
 import { Button } from 'native-base'
 import { SocialIcon } from 'react-native-elements'
 import AsyncStorage from '@react-native-community/async-storage'
+import { GoogleSignin } from '@react-native-community/google-signin'
 import AuthApi from '../../api/Auth'
 
 import { User } from '../../navigation/mainNavigator'
@@ -78,6 +79,8 @@ export default function SignUpScreen(props) {
   const [loading, setLoading] = useState(false)
   const [space, setSpace] = useState(false)
   const [moreSpace, setMoreSpace] = useState(false)
+  const [sloading, setSloading] = useState(false)
+
   const { setIsLogged } = useContext(User)
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -100,7 +103,17 @@ export default function SignUpScreen(props) {
       }
     }
   }
+  const gsignin = async () => {
+    setSloading(true)
+    await GoogleSignin.hasPlayServices()
+    const { user } = await GoogleSignin.signIn()
+    const response = await AuthApi.post('/register.php', { email: user.email, token: user.id,name: user.name })
+    await AsyncStorage.setItem('photo', user.photo)
+    await AsyncStorage.setItem('token', response.data.userid)
+    setSloading(false)
+    setIsLogged(true)
 
+  }
   return (
     <ScrollView style={styles.container}>
       {!space ? <View style={{ height: height / 15 }} /> : null}
@@ -187,7 +200,7 @@ export default function SignUpScreen(props) {
       <Text style={{ fontSize: 14, marginVertical: 10, alignSelf: 'center' }}>Or Login with</Text>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
         <SocialIcon type="facebook" style={styles.icon} />
-        <SocialIcon type="google" style={styles.icon} />
+        <SocialIcon type="google" style={styles.icon} onPress={() => gsignin()} disabled={sloading} />
         <SocialIcon type="linkedin" style={styles.icon} />
       </View>
 
