@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { StyleSheet, View, Image, ActivityIndicator, ScrollView, Dimensions } from 'react-native'
 import { Text, Button } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
 import { SocialIcon } from 'react-native-elements'
 //
 import { User } from '../../../navigation/mainNavigator'
+// import AuthApi from '../../../api/Auth'
 
 import Img from '../../../assets/profile.jpg'
 
@@ -93,7 +94,14 @@ export default function Profile() {
     setPhoto({ uri: asyncPhoto })
   }
   getPhoto()
+  const getUser = async () => {
+    // const user = await AuthApi.get('/company.php')
+    // console.log(user.data)
+  }
 
+  useEffect(() => {
+    getUser()
+  }, [])
   return (
     <ScrollView style={{ backgroundColor: '#ededed' }}>
       <Image style={styles.avatar} source={photo || Img} />
