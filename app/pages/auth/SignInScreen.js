@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { SocialIcon } from 'react-native-elements'
 import { Button } from 'native-base'
 import { GoogleSignin } from '@react-native-community/google-signin'
+
 import AuthApi from '../../api/Auth'
 
 import { User } from '../../navigation/mainNavigator'
@@ -207,9 +208,9 @@ export default function SignInScreen(props) {
 
       <Text style={{ fontSize: 14, marginVertical: 10, alignSelf: 'center' }}>Or Login with</Text>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-        <SocialIcon type="facebook" style={styles.icon} />
+        <SocialIcon type="facebook" style={styles.icon} disabled={sloading} />
         <SocialIcon type="google" style={styles.icon} onPress={() => gsignin()} disabled={sloading} />
-        <SocialIcon type="linkedin" style={styles.icon} />
+        <SocialIcon type="linkedin" style={styles.icon} disabled={sloading} />
       </View>
 
       <TouchableOpacity

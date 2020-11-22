@@ -91,11 +91,15 @@ export default function Profile() {
   const [photo, setPhoto] = useState(null)
   const getPhoto = async () => {
     const asyncPhoto = await AsyncStorage.getItem('photo')
+    
     setPhoto({ uri: asyncPhoto })
   }
   getPhoto()
   const getUser = async () => {
-    // const user = await AuthApi.get('/company.php')
+    // const token = await AsyncStorage.getItem('token')
+    // const user = await AuthApi.get('/getprofile.php',{
+    //   Userid:token
+    // })
     // console.log(user.data)
   }
 
