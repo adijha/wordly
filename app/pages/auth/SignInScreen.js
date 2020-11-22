@@ -89,8 +89,8 @@ export default function SignInScreen(props) {
       setLoading(false)
     } else {
       try {
-        const response = await AuthApi.post('/signin', { email, password })
-        await AsyncStorage.setItem('token', response.data.token)
+        const response = await AuthApi.post('/login.php', { email, password })
+        await AsyncStorage.setItem('token', response.data.userid)
         setLoading(false)
         setIsLogged(true)
       } catch (err) {

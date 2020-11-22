@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   View,
   Text,
@@ -14,6 +14,8 @@ import { Button } from 'native-base'
 import { SocialIcon } from 'react-native-elements'
 import AsyncStorage from '@react-native-community/async-storage'
 import AuthApi from '../../api/Auth'
+
+import { User } from '../../navigation/mainNavigator'
 
 const { height, width } = Dimensions.get('screen')
 
@@ -76,6 +78,7 @@ export default function SignUpScreen(props) {
   const [loading, setLoading] = useState(false)
   const [space, setSpace] = useState(false)
   const [moreSpace, setMoreSpace] = useState(false)
+  const { setIsLogged } = useContext(User)
   const onSubmit = async (event) => {
     event.preventDefault()
     setSpace(false)
@@ -86,14 +89,14 @@ export default function SignUpScreen(props) {
       setLoading(false)
     } else {
       try {
-        const response = await AuthApi.post('/signup', { email, password })
-        await AsyncStorage.setItem('token', response.data.token)
+        await AuthApi.post('/register.php', { name, email, password })
+        const res = await AuthApi.post('/login.php', { email, password })
+        await AsyncStorage.setItem('token', res.data.userid)
         setLoading(false)
-        props.navigation.navigate('Home')
+        setIsLogged(true)
       } catch (error) {
         setErrorMessage('Something went wrong')
         setLoading(false)
-        // console.log({ error })
       }
     }
   }

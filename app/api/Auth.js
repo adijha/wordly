@@ -1,7 +1,7 @@
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
 
-const url = 'https://path-track-app.herokuapp.com'
+const url = 'http://wordly.in/appapi'
 
 const instance = axios.create({
   baseURL: url
