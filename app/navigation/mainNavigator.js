@@ -237,12 +237,11 @@ function CustomDrawerContent(props) {
 export const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
-      // openByDefault
+      initialRouteName="Main"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       overlayColor="transparent"
     >
-      <Drawer.Screen name="Home" component={HomeStackNavigator} />
+      <Drawer.Screen name="Main" component={HomeStackNavigator} />
     </Drawer.Navigator>
   )
 }
@@ -283,7 +282,7 @@ const MainContainer = (props) => {
                   options={() => ({
                     headerShown: false
                   })}
-                  name="Home"
+                  name="Main"
                   component={DrawerNavigator}
                 />
               ) : (
