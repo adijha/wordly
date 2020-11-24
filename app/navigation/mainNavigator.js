@@ -7,7 +7,6 @@ import AsyncStorage from '@react-native-community/async-storage'
 //navigation imports
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -36,8 +35,6 @@ import SignUpScreen from '../pages/auth/SignUpScreen'
 
 // initialize navigator
 const Stack = createStackNavigator()
-const Tab = createBottomTabNavigator()
-const ProfileStack = createStackNavigator()
 const HomeStack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 export const User = React.createContext([])
@@ -84,6 +81,33 @@ export const HomeStackNavigator = ({ navigation }) => {
         name="Home"
         component={HomeScreen}
       />
+      <HomeStack.Screen
+        options={{
+          headerStyle: {
+            // backgroundColor: "#3E69B9"
+          },
+          // headerTintColor: 'white',
+          title: 'My Profile',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <IoniconsI
+                name="menu"
+                size={30}
+                // color="#FABE0F"
+                style={{ marginLeft: 22 }}
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Edit Profile')}>
+              <FontAwesomeI name="pencil" size={25} style={{ marginRight: 20 }} />
+            </TouchableOpacity>
+          )
+        }}
+        name="Profile"
+        component={ProfileScreen}
+      />
+      <HomeStack.Screen name="Edit Profile" component={EditProfile} />
       <HomeStack.Screen name="UserDetails" component={UserDetails} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="SearchResults" component={SearchResults} />
@@ -91,66 +115,6 @@ export const HomeStackNavigator = ({ navigation }) => {
       <HomeStack.Screen name="Contact Us" component={Contact} />
       <HomeStack.Screen name="Privacy Policy" component={Privacy} />
     </HomeStack.Navigator>
-  )
-}
-export const ProfileStackNavigator = (props) => (
-  <ProfileStack.Navigator>
-    <ProfileStack.Screen
-      options={{
-        headerStyle: {
-          // backgroundColor: "#3E69B9"
-        },
-        // headerTintColor: 'white',
-        title: 'My Profile',
-        headerLeft: () => (
-          <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
-            <IoniconsI
-              name="menu"
-              size={30}
-              // color="#FABE0F"
-              style={{ marginLeft: 22 }}
-            />
-          </TouchableOpacity>
-        ),
-        headerRight: () => (
-          <TouchableOpacity onPress={() => props.navigation.navigate('Edit Profile')}>
-            <FontAwesomeI name="pencil" size={25} style={{ marginRight: 20 }} />
-          </TouchableOpacity>
-        )
-      }}
-      name="Profile"
-      component={ProfileScreen}
-    />
-    <ProfileStack.Screen name="Edit Profile" component={EditProfile} />
-  </ProfileStack.Navigator>
-)
-
-const MainTabNavigator = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName
-          if (route.name === 'Home') {
-            iconName = focused ? 'ios-home' : 'ios-home-outline'
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline'
-          }
-          return <IoniconsI name={iconName} size={size} color={color} />
-        }
-      })}
-      tabBarOptions={{
-        activeTintColor: '#3E69B9',
-        // inactiveBackgroundColor: '#23283B',
-        // activeBackgroundColor: '#23283B',
-        style: { height: 60 },
-        labelStyle: { fontSize: 16, marginTop: -8 }
-      }}
-    >
-      <Tab.Screen name="Home" component={HomeStackNavigator} />
-      <Tab.Screen name="Profile" component={ProfileStackNavigator} />
-    </Tab.Navigator>
   )
 }
 function CustomDrawerContent(props) {
@@ -190,14 +154,14 @@ function CustomDrawerContent(props) {
           <Text style={{ fontSize: 15, marginLeft: 20, color: 'white' }}>View Profile</Text>
         </TouchableOpacity>
       </View>
-      {/* <DrawerItem
+      <DrawerItem
         label="Home"
         onPress={() => {
           props.navigation.navigate('Home')
           props.navigation.closeDrawer()
         }}
         icon={({ color, size }) => <IoniconsI name="ios-home-outline" size={size} color={color} />}
-      /> */}
+      />
       <DrawerItem
         label="Notifications"
         onPress={() => {
@@ -278,7 +242,7 @@ export const DrawerNavigator = () => {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       overlayColor="transparent"
     >
-      <Drawer.Screen name="Home" component={MainTabNavigator} />
+      <Drawer.Screen name="Home" component={HomeStackNavigator} />
     </Drawer.Navigator>
   )
 }
