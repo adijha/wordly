@@ -1,13 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { StyleSheet, View, Image, ActivityIndicator, ScrollView, Dimensions } from 'react-native'
-import { Text, Button } from 'native-base'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, Image, ScrollView, Dimensions } from 'react-native'
+import { Text } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
-import { SocialIcon } from 'react-native-elements'
-//
-import { User } from '../../../navigation/mainNavigator'
+import IoniconsI from 'react-native-vector-icons/Ionicons'
 // import AuthApi from '../../../api/Auth'
-
-import Img from '../../../assets/profile.jpg'
 
 const { height } = Dimensions.get('screen')
 const styles = StyleSheet.create({
@@ -80,21 +76,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: '100%',
     paddingHorizontal: 30,
-    marginTop: 5,
+    marginTop: 8,
     paddingVertical: 18
   },
   cardTitle: { fontSize: 16, marginBottom: 8 }
 })
 export default function Profile() {
-  const [loading, setLoading] = useState(false)
-  const { setIsLogged } = useContext(User)
   const [photo, setPhoto] = useState(null)
   const getPhoto = async () => {
     const asyncPhoto = await AsyncStorage.getItem('photo')
-    
-    setPhoto({ uri: asyncPhoto })
+    asyncPhoto !== null || asyncPhoto !== undefined ? setPhoto({ uri: asyncPhoto }) : setPhoto(null)
   }
-  getPhoto()
   const getUser = async () => {
     // const token = await AsyncStorage.getItem('token')
     // const user = await AuthApi.get('/getprofile.php',{
@@ -104,17 +96,21 @@ export default function Profile() {
   }
 
   useEffect(() => {
+    getPhoto()
     getUser()
   }, [])
   return (
     <ScrollView style={{ backgroundColor: '#ededed' }}>
-      <Image style={styles.avatar} source={photo || Img} />
+      {photo ? (
+        <View style={[styles.avatar, { backgroundColor: '#ededed', alignItems: 'center', justifyContent: 'center' }]}>
+          <IoniconsI size={40} name="person-outline" color="gray" />
+        </View>
+      ) : (
+        <Image style={styles.avatar} source={photo} />
+      )}
       <View style={styles.header} />
       <View style={[styles.card, { paddingTop: 48, marginTop: 0 }]}>
         <Text style={styles.name}>Abhay Dubey</Text>
-        <Text style={{ fontSize: 14, marginVertical: 5 }}>React developer at mojitilabs, Haryana India</Text>
-        <Text style={{ fontSize: 14, marginVertical: 2 }}>Jaipur National University . Mojitolabs</Text>
-        <Text style={{ fontSize: 14, marginVertical: 2 }}>Gurgaun, Haryana, India</Text>
       </View>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>About</Text>
@@ -184,94 +180,15 @@ export default function Profile() {
         </View>
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Experience</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginBottom: 10
-          }}
-        >
-          <View>
-            <Image
-              style={{ width: 50, height: 50, resizeMode: 'contain', marginRight: 10 }}
-              source={require('../../../assets/logo.jpeg')}
-            />
-          </View>
-          <View
-            style={{
-              borderBottomWidth: StyleSheet.hairlineWidth,
-              flex: 1,
-              paddingBottom: 10
-            }}
-          >
-            <Text style={{ fontSize: 17 }}>All Asia conc Developer</Text>
-            <Text style={{ fontSize: 15 }}>Mojitolabs</Text>
-            <Text style={{ color: '#222', fontSize: 14 }}>January 2020 - Present</Text>
-          </View>
-        </View>
-
-        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-          <View>
-            <Image
-              style={{ width: 50, height: 50, resizeMode: 'contain', marginRight: 10 }}
-              source={require('../../../assets/logo.jpeg')}
-            />
-          </View>
-          <View>
-            <Text style={{ fontSize: 17 }}>All Asia conc Developer</Text>
-            <Text style={{ fontSize: 15 }}>Mojitolabs</Text>
-            <Text style={{ color: '#222', fontSize: 14 }}>January 2020 - Present</Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Education</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginBottom: 10
-          }}
-        >
-          <View>
-            <Image
-              style={{ width: 50, height: 50, resizeMode: 'contain', marginRight: 10 }}
-              source={require('../../../assets/logo.jpeg')}
-            />
-          </View>
-          <View
-            style={{
-              borderBottomWidth: StyleSheet.hairlineWidth,
-              flex: 1,
-              paddingBottom: 10
-            }}
-          >
-            <Text style={{ fontSize: 17 }}>Bachelor of Engineering</Text>
-            <Text style={{ fontSize: 15 }}>IIT, Nepal</Text>
-            <Text style={{ color: '#222', fontSize: 14 }}>January 2020 - Present</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.card}>
+      {/* <View style={styles.card}>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <SocialIcon type="facebook" style={styles.icon} />
           <SocialIcon type="twitter" style={styles.icon} />
           <SocialIcon type="linkedin" style={styles.icon} />
         </View>
-      </View>
-      <View style={styles.card}>
-        <Button
-          full
-          rounded
-          info
-          style={{
-            backgroundColor: '#3E69B9',
-            marginVertical: 20
-          }}
-        >
-          <Text style={{ color: 'white' }}>Reset Password</Text>
-        </Button>
+      </View> */}
+      {/* <View style={styles.card}>
+       
         {!loading ? (
           <Button
             full
@@ -295,7 +212,7 @@ export default function Profile() {
             <ActivityIndicator size="large" color="white" />
           </Button>
         )}
-      </View>
+      </View> */}
     </ScrollView>
   )
 }
