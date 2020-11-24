@@ -18,16 +18,16 @@ import IoniconsI from 'react-native-vector-icons/Ionicons'
 import FontAwesomeI from 'react-native-vector-icons/FontAwesome'
 
 //Home
-import HomeScreen from '../pages/home/homeStack/Home'
-import UserDetails from '../pages/home/homeStack/UserDetails'
-import SearchResults from '../pages/home/homeStack/SearchResults'
-import Contact from '../pages/home/homeStack/Contact'
-import Notifications from '../pages/home/homeStack/Notifications'
-import Privacy from '../pages/home/homeStack/Privacy'
-import About from '../pages/home/homeStack/About'
+import HomeScreen from '../pages/home/Home'
+import UserDetails from '../pages/home/UserDetails'
+import SearchResults from '../pages/home/SearchResults'
+import Contact from '../pages/home/Contact'
+import Notifications from '../pages/home/Notifications'
+import Privacy from '../pages/home/Privacy'
+import About from '../pages/home/About'
 //Profile
-import ProfileScreen from '../pages/home/profileStack/ProfileScreen'
-import EditProfile from '../pages/home/profileStack/EditProfile'
+import ProfileScreen from '../pages/home/ProfileScreen'
+import EditProfile from '../pages/home/EditProfile'
 //auth
 import LoadingScreen from '../pages/auth/LoadingScreen'
 import SignInScreen from '../pages/auth/SignInScreen'
@@ -52,17 +52,12 @@ export const HomeStackNavigator = ({ navigation }) => {
     <HomeStack.Navigator>
       <HomeStack.Screen
         options={{
-          headerStyle: {
-            // backgroundColor: '#22273A'
-          },
-          // headerTintColor: "#3E69B9",
           title: 'Wordly',
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <IoniconsI
                 name="menu"
                 size={30}
-                // color="#3E69B9"
                 style={{ marginLeft: 22 }}
               />
             </TouchableOpacity>
@@ -72,7 +67,6 @@ export const HomeStackNavigator = ({ navigation }) => {
               <FontAwesomeI
                 name="bell"
                 size={25}
-                // color="#154fbd"
                 style={{ marginRight: 20 }}
               />
             </TouchableOpacity>
@@ -83,21 +77,7 @@ export const HomeStackNavigator = ({ navigation }) => {
       />
       <HomeStack.Screen
         options={{
-          headerStyle: {
-            // backgroundColor: "#3E69B9"
-          },
-          // headerTintColor: 'white',
           title: 'My Profile',
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <IoniconsI
-                name="menu"
-                size={30}
-                // color="#FABE0F"
-                style={{ marginLeft: 22 }}
-              />
-            </TouchableOpacity>
-          ),
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Edit Profile')}>
               <FontAwesomeI name="pencil" size={25} style={{ marginRight: 20 }} />
@@ -230,7 +210,6 @@ function CustomDrawerContent(props) {
         </Button>
       )}
 
-      {/* <DrawerItemList {...props} /> */}
     </DrawerContentScrollView>
   )
 }
