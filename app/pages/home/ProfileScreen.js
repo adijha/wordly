@@ -93,6 +93,8 @@ export default function Profile() {
   const [editSkills, setEditSkills] = useState(false)
   const [allSkills, setAllSkills] = useState([])
   const [about, setAbout] = useState('')
+  const [profile, setProfile] = useState(false)
+
   const getPhoto = async () => {
     const asyncPhoto = await AsyncStorage.getItem('photo')
     asyncPhoto !== null || asyncPhoto !== undefined ? setPhoto({ uri: asyncPhoto }) : setPhoto(null)
@@ -200,7 +202,16 @@ export default function Profile() {
       ) : (
         <Image style={styles.avatar} source={photo} />
       )}
-      <View style={styles.header} />
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={() => {
+            setProfile(true)
+          }}
+          style={{ position: 'absolute', right: 20, top: 20 }}
+        >
+          <FontAwesomeI name="pencil" size={17} color="#ededed" />
+        </TouchableOpacity>
+      </View>
       <View style={[styles.card, { paddingTop: 48, marginTop: 0 }]}>
         <Text style={styles.name}>{userDetail.name}</Text>
       </View>
@@ -224,7 +235,7 @@ export default function Profile() {
               <>
                 <Text style={{ fontSize: 14 }}>Edit here</Text>
                 <TextInput
-                  style={[styles.input,{height:80}]}
+                  style={[styles.input, { height: 80 }]}
                   autoCapitalize="none"
                   defaultValue={about}
                   onChangeText={(newAbout) => setAbout(newAbout)}
