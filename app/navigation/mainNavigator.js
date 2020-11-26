@@ -10,7 +10,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
-  // DrawerItemList,
   DrawerItem
 } from '@react-navigation/drawer'
 //bottom tab bar icons
@@ -49,7 +48,9 @@ export const AuthNavigator = () => (
 )
 export const HomeStackNavigator = ({ navigation }) => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+    initialRouteName="Profile"
+    >
       <HomeStack.Screen
         options={{
           title: 'Wordly',

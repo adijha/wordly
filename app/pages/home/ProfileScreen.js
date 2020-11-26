@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Image, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, View, Image, ScrollView, Dimensions, TextInput, TouchableOpacity } from 'react-native'
 import { Text } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
 import IoniconsI from 'react-native-vector-icons/Ionicons'
-// import AuthApi from '../../../api/Auth'
+import FontAwesomeI from 'react-native-vector-icons/FontAwesome'
+import Toast from 'react-native-simple-toast'
+import AuthApi from '../../api/Auth'
 
 const { height } = Dimensions.get('screen')
 const styles = StyleSheet.create({
@@ -65,12 +67,7 @@ const styles = StyleSheet.create({
     margin: 5
   },
   icon: { width: height / 18, height: height / 18 },
-  loadingButton: {
-    width: 46,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#3E69B9'
-  },
+
   card: {
     alignSelf: 'center',
     backgroundColor: '#fff',
@@ -79,25 +76,83 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingVertical: 18
   },
-  cardTitle: { fontSize: 16, marginBottom: 8 }
+  cardTitle: { fontSize: 16, marginBottom: 8 },
+  input: {
+    borderBottomColor: '#8A8F9E',
+    borderBottomWidth: 1,
+    // height: 40,
+    fontSize: 15,
+    color: '#161F3D'
+  }
 })
 export default function Profile() {
   const [photo, setPhoto] = useState(null)
+  const [userDetail, setUserDetail] = useState({})
+  const [addAbout, setAddAbout] = useState(false)
+  const [editAbout, setEditAbout] = useState(false)
+  const [addSkills, setAddSkills] = useState(false)
+  const [editSkills, setEditSkills] = useState(false)
+  const [allSkills, setAllSkills] = useState([])
+  const [skill, setSkill] = useState('')
+  const [about, setAbout] = useState('')
+
   const getPhoto = async () => {
     const asyncPhoto = await AsyncStorage.getItem('photo')
     asyncPhoto !== null || asyncPhoto !== undefined ? setPhoto({ uri: asyncPhoto }) : setPhoto(null)
   }
   const getUser = async () => {
-    // const token = await AsyncStorage.getItem('token')
-    // const user = await AuthApi.get('/getprofile.php',{
-    //   Userid:token
+    const token = await AsyncStorage.getItem('token')
+    const user = await AuthApi.post('/getprofile.php', {
+      userid: token
+    })
+    // const skills = await AuthApi.post('/usertag.php', {
+    //   userid: token,
+    //   tagid: 1,
+    //   editid: ''
     // })
-    // console.log(user.data)
+
+    setUserDetail(user.data)
+  }
+  const newAboutAdd = async () => {
+    try {
+      await AuthApi.post('/profile.php', {
+        userid: userDetail.userid,
+        name: userDetail.name,
+        about
+      })
+      setEditAbout(false)
+      setAddAbout(false)
+      getUser()
+    } catch (error) {
+      Toast.show('There is some problem, can you please try it agin.')
+    }
+  }
+  const getAllSkills = async () => {
+    try {
+      const { data } = await AuthApi.get('/skill.php')
+      console.log(data.skills)
+      setAllSkills(data.skills)
+    } catch (error) {
+      Toast.show('There is some problem, can you please try it agin.')
+    }
+  }
+  const deleteSkill = async (item) => {
+    try {
+      await AuthApi.post('/deleteusertag.php', {
+        userid: userDetail.userid,
+        editid: item
+      })
+      getUser()
+      Toast.show('Removed')
+    } catch (error) {
+      Toast.show('There is some problem, can you please try it agin.')
+    }
   }
 
   useEffect(() => {
     getPhoto()
     getUser()
+    getAllSkills()
   }, [])
   return (
     <ScrollView style={{ backgroundColor: '#ededed' }}>
@@ -110,109 +165,165 @@ export default function Profile() {
       )}
       <View style={styles.header} />
       <View style={[styles.card, { paddingTop: 48, marginTop: 0 }]}>
-        <Text style={styles.name}>Abhay Dubey</Text>
+        <Text style={styles.name}>{userDetail.name}</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>About</Text>
-        <Text style={{ fontSize: 14 }}>
-          I am a farmer turned into software developer, I use his axe to type on keyboard, I have a golden tractor, with
-          it&apos;s battery I run my mac.
-        </Text>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Tags</Text>
-        <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-          <View style={styles.tag}>
-            <Text
-              style={{
-                color: '#555',
-
-                fontSize: 14
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.cardTitle}>About</Text>
+          {userDetail.about ? (
+            <TouchableOpacity
+              onPress={() => {
+                setEditAbout(true)
               }}
             >
-              React.js
-            </Text>
-          </View>
-          <View style={styles.tag}>
-            <Text
-              style={{
-                color: '#555',
-
-                fontSize: 14
-              }}
-            >
-              Redux.js
-            </Text>
-          </View>
-          <View style={styles.tag}>
-            <Text
-              style={{
-                color: '#555',
-
-                fontSize: 14
-              }}
-            >
-              Node.js
-            </Text>
-          </View>
-          <View style={styles.tag}>
-            <Text
-              style={{
-                color: '#555',
-
-                fontSize: 14
-              }}
-            >
-              Mongoose.js
-            </Text>
-          </View>
-          <View style={styles.tag}>
-            <Text
-              style={{
-                color: '#555',
-
-                fontSize: 14
-              }}
-            >
-              Express.js
-            </Text>
-          </View>
+              <FontAwesomeI name="pencil" size={17} color="gray" />
+            </TouchableOpacity>
+          ) : null}
         </View>
-      </View>
 
-      {/* <View style={styles.card}>
-        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-          <SocialIcon type="facebook" style={styles.icon} />
-          <SocialIcon type="twitter" style={styles.icon} />
-          <SocialIcon type="linkedin" style={styles.icon} />
-        </View>
-      </View> */}
-      {/* <View style={styles.card}>
-       
-        {!loading ? (
-          <Button
-            full
-            rounded
-            info
-            style={{
-              backgroundColor: '#3E69B9'
-            }}
-            onPress={async () => {
-              setLoading(true)
-              await AsyncStorage.removeItem('token')
+        {userDetail.about ? (
+          <>
+            {editAbout ? (
+              <>
+                <Text style={{ fontSize: 14 }}>Edit here</Text>
+                <TextInput
+                  style={styles.input}
+                  autoCapitalize="none"
+                  onChangeText={(newAbout) => setAbout(newAbout)}
+                  multiline
+                  placeholder={userDetail.about}
+                />
 
-              setLoading(false)
-              setIsLogged(false)
-            }}
-          >
-            <Text style={{ color: 'white' }}>Log Out</Text>
-          </Button>
+                <TouchableOpacity onPress={() => newAboutAdd()} style={{ alignItems: 'center', marginTop: 20 }}>
+                  <Text style={{ fontSize: 18, color: '#3E69B9' }}>Save</Text>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <Text style={{ fontSize: 14 }}>{userDetail.about}</Text>
+            )}
+          </>
         ) : (
-          <Button rounded info style={styles.loadingButton}>
-            <ActivityIndicator size="large" color="white" />
-          </Button>
+          <>
+            {addAbout ? (
+              <View>
+                <Text style={{ fontSize: 14 }}>Write about yourself</Text>
+                <TextInput
+                  style={styles.input}
+                  autoCapitalize="none"
+                  onChangeText={(newAbout) => setAbout(newAbout)}
+                  multiline
+                />
+
+                <TouchableOpacity onPress={() => newAboutAdd()} style={{ alignItems: 'center', marginTop: 20 }}>
+                  <Text style={{ fontSize: 18, color: '#3E69B9' }}>Save</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => setAddAbout(true)}>
+                <IoniconsI size={29} name="add-circle-outline" color="gray" />
+              </TouchableOpacity>
+            )}
+          </>
         )}
-      </View> */}
+      </View>
+      <View style={styles.card}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.cardTitle}>Tags</Text>
+          {userDetail.taglist ? (
+            <TouchableOpacity
+              onPress={() => {
+                setEditSkills(true)
+              }}
+            >
+              <FontAwesomeI name="pencil" size={17} color="gray" />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+
+        {!editSkills ? (
+          <View>
+            <Text style={{ fontSize: 14 }}>Add Skills</Text>
+
+            {userDetail && userDetail.taglist && (
+              <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
+                {userDetail &&
+                  userDetail.taglist &&
+                  userDetail.taglist.map((i) => (
+                    <>
+                      {i.tagname && (
+                        <View
+                          style={[
+                            styles.tag,
+                            {
+                              flexDirection: 'row',
+                              alignItems: 'center'
+                            }
+                          ]}
+                        >
+                          <Text
+                            style={{
+                              color: '#555',
+                              fontSize: 14,
+                              marginRight: 10
+                            }}
+                          >
+                            {i.tagname}
+                          </Text>
+
+                          <TouchableOpacity
+                            onPress={() => {
+                              deleteSkill(i.editid)
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: 'red',
+                                fontSize: 16
+                              }}
+                            >
+                              X
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      )}
+                    </>
+                  ))}
+              </View>
+            )}
+
+            <TouchableOpacity onPress={() => setEditSkills(false)} style={{ alignItems: 'center', marginTop: 20 }}>
+              <Text style={{ fontSize: 18, color: '#3E69B9' }}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <>
+            {userDetail && userDetail.taglist ? (
+              <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
+                {userDetail &&
+                  userDetail.taglist &&
+                  userDetail.taglist.map((i) => (
+                    <>
+                      {i.tagname && (
+                        <View style={styles.tag}>
+                          <Text
+                            style={{
+                              color: '#555',
+                              fontSize: 14
+                            }}
+                          >
+                            {i.tagname}
+                          </Text>
+                        </View>
+                      )}
+                    </>
+                  ))}
+              </View>
+            ) : (
+              <Text>Add Skills</Text>
+            )}
+          </>
+        )}
+      </View>
     </ScrollView>
   )
 }

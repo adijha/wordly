@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { SafeAreaView, Text, StyleSheet, View, FlatList } from 'react-native'
 import axios from 'axios'
 import { SearchBar } from 'react-native-elements'
-
+import AuthApi from '../../api/Auth'
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white'
@@ -19,8 +19,11 @@ const App = () => {
   const searchFilterFunction = async (text) => {
     if (text) {
       setSearch(text)
-      const data = await axios.get(`https://api.domainsdb.info/v1/domains/search?domain=${text}`)
-      setFilteredDataSource(data.data.domains)
+      const res = await AuthApi.post('/searchapi.php', {
+        searchval: text
+      })
+      console.log(res.data.searchlist)
+      setFilteredDataSource(res.data.searchlist)
     }
   }
   const getItem = (item) => {
@@ -31,7 +34,7 @@ const App = () => {
   const ItemView = ({ item }) => {
     return (
       <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-        {item.domain} {item.isDead}
+        {item.value}
       </Text>
     )
   }
@@ -62,7 +65,7 @@ const App = () => {
           inputStyle={{ backgroundColor: 'white' }}
           inputContainerStyle={{ backgroundColor: 'white' }}
         />
-        {filteredDataSource.length > 0 && (
+        { filteredDataSource&& filteredDataSource.length > 0 && (
           <FlatList
             data={filteredDataSource}
             keyExtractor={(item, index) => index.toString()}

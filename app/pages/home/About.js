@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import HTML from 'react-native-render-html'
 import { View, Text, Image } from 'react-native'
+import AuthApi from '../../api/Auth'
 
 export default function About() {
+  const [about, setAbout] = useState('')
+  const getAbout = async () => {
+    const res = await AuthApi.post('/about.php')
+    setAbout(res.data.about)
+  }
+  useEffect(() => {
+    getAbout()
+  }, [])
+
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center',paddingHorizontal:25 }}>
+    <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center', paddingHorizontal: 25 }}>
       <Image source={require('../../assets/logo.jpeg')} style={{ width: 100, height: 100 }} />
       <Text style={{ fontSize: 18, marginVertical: 20 }}>Wordly, Private Limited</Text>
-      <Text style={{ textAlign: 'center' }}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard
-        dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-        specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-        Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of
-        Lorem Ipsum.
-      </Text>
+      <HTML html={about} contentWidth={100} />
     </View>
   )
 }
