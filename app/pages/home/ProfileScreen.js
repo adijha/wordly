@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Image, ScrollView, Dimensions, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Image, ScrollView, Dimensions, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import { Text } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
 import IoniconsI from 'react-native-vector-icons/Ionicons'
@@ -80,9 +80,10 @@ const styles = StyleSheet.create({
   input: {
     borderBottomColor: '#8A8F9E',
     borderBottomWidth: 1,
-    // height: 40,
+    height: 40,
     fontSize: 15,
     color: '#161F3D'
+    // marginBottom:20
   }
 })
 export default function Profile() {
@@ -147,6 +148,54 @@ export default function Profile() {
     } catch (error) {
       Toast.show('There is some problem, can you please try it agin.')
     }
+  }
+  const [search, setSearch] = useState('')
+  const [filteredDataSource, setFilteredDataSource] = useState([])
+
+  const searchFilterFunction = async (text) => {
+    if (text) {
+      const upperCaseText = text.toUpperCase()
+      const newResult = allSkills.filter((i) => {
+        const item = i.skill.toUpperCase()
+        return item.includes(upperCaseText)
+      })
+      setFilteredDataSource(newResult)
+    } else {
+      setFilteredDataSource([])
+    }
+  }
+  const getItem = async (item) => {
+    try {
+      await AuthApi.post('/usertag.php', {
+        userid: userDetail.userid,
+        tagid: item.id,
+        editid: ''
+      })
+      getUser()
+      Toast.show('Added')
+    } catch (error) {
+      Toast.show('There is some problem, can you please try it agin.')
+    }
+  }
+
+  const ItemView = ({ item }) => {
+    return (
+      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+        {item.skill}
+      </Text>
+    )
+  }
+
+  const ItemSeparatorView = () => {
+    return (
+      <View
+        style={{
+          height: 0.5,
+          width: '100%',
+          backgroundColor: '#C8C8C8'
+        }}
+      />
+    )
   }
 
   useEffect(() => {
@@ -240,12 +289,28 @@ export default function Profile() {
           ) : null}
         </View>
 
-        {!editSkills ? (
+        {editSkills ? (
           <View>
             <Text style={{ fontSize: 14 }}>Add Skills</Text>
 
+            <TextInput
+              style={styles.input}
+              autoCapitalize="none"
+              onChangeText={(text) => searchFilterFunction(text)}
+              returnKeyLabel="done"
+            />
+            {filteredDataSource && filteredDataSource.length > 0 && (
+              <FlatList
+                style={{ marginVertical: 20 }}
+                data={filteredDataSource}
+                keyExtractor={(item, index) => index.toString()}
+                ItemSeparatorComponent={ItemSeparatorView}
+                renderItem={ItemView}
+              />
+            )}
+
             {userDetail && userDetail.taglist && (
-              <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
+              <View style={{ flexWrap: 'wrap', flexDirection: 'row', marginTop: 20 }}>
                 {userDetail &&
                   userDetail.taglist &&
                   userDetail.taglist.map((i) => (
@@ -297,7 +362,7 @@ export default function Profile() {
           </View>
         ) : (
           <>
-            {userDetail && userDetail.taglist ? (
+            {userDetail && userDetail.taglist && userDetail.taglist.length > 0 ? (
               <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
                 {userDetail &&
                   userDetail.taglist &&
@@ -319,7 +384,9 @@ export default function Profile() {
                   ))}
               </View>
             ) : (
-              <Text>Add Skills</Text>
+              <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => setEditSkills(true)}>
+                <IoniconsI size={29} name="add-circle-outline" color="gray" />
+              </TouchableOpacity>
             )}
           </>
         )}
