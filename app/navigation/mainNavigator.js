@@ -79,16 +79,16 @@ export const HomeStackNavigator = ({ navigation }) => {
       <HomeStack.Screen
         options={{
           title: 'My Profile',
-          headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('Edit Profile')}>
-              <FontAwesomeI name="pencil" size={25} style={{ marginRight: 20 }} />
-            </TouchableOpacity>
-          )
+          // headerRight: () => (
+          //   <TouchableOpacity onPress={() => navigation.navigate('Edit Profile')}>
+          //     <FontAwesomeI name="pencil" size={25} style={{ marginRight: 20 }} />
+          //   </TouchableOpacity>
+          // )
         }}
         name="Profile"
         component={ProfileScreen}
       />
-      <HomeStack.Screen name="Edit Profile" component={EditProfile} />
+      {/* <HomeStack.Screen name="Edit Profile" component={EditProfile} /> */}
       <HomeStack.Screen name="UserDetails" component={UserDetails} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="SearchResults" component={SearchResults} />

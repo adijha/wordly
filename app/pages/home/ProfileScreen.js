@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     paddingHorizontal: 15,
-    margin: 5
+    marginRight: 5
   },
   icon: { width: height / 18, height: height / 18 },
 
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 15,
     color: '#161F3D'
-    // marginBottom:20
   }
 })
 export default function Profile() {
@@ -91,12 +90,9 @@ export default function Profile() {
   const [userDetail, setUserDetail] = useState({})
   const [addAbout, setAddAbout] = useState(false)
   const [editAbout, setEditAbout] = useState(false)
-  const [addSkills, setAddSkills] = useState(false)
   const [editSkills, setEditSkills] = useState(false)
   const [allSkills, setAllSkills] = useState([])
-  const [skill, setSkill] = useState('')
   const [about, setAbout] = useState('')
-
   const getPhoto = async () => {
     const asyncPhoto = await AsyncStorage.getItem('photo')
     asyncPhoto !== null || asyncPhoto !== undefined ? setPhoto({ uri: asyncPhoto }) : setPhoto(null)
@@ -106,12 +102,6 @@ export default function Profile() {
     const user = await AuthApi.post('/getprofile.php', {
       userid: token
     })
-    // const skills = await AuthApi.post('/usertag.php', {
-    //   userid: token,
-    //   tagid: 1,
-    //   editid: ''
-    // })
-
     setUserDetail(user.data)
   }
   const newAboutAdd = async () => {
@@ -131,7 +121,6 @@ export default function Profile() {
   const getAllSkills = async () => {
     try {
       const { data } = await AuthApi.get('/skill.php')
-      console.log(data.skills)
       setAllSkills(data.skills)
     } catch (error) {
       Toast.show('There is some problem, can you please try it agin.')
@@ -149,7 +138,6 @@ export default function Profile() {
       Toast.show('There is some problem, can you please try it agin.')
     }
   }
-  const [search, setSearch] = useState('')
   const [filteredDataSource, setFilteredDataSource] = useState([])
 
   const searchFilterFunction = async (text) => {
@@ -236,8 +224,9 @@ export default function Profile() {
               <>
                 <Text style={{ fontSize: 14 }}>Edit here</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input,{height:80}]}
                   autoCapitalize="none"
+                  defaultValue={about}
                   onChangeText={(newAbout) => setAbout(newAbout)}
                   multiline
                   placeholder={userDetail.about}
@@ -301,7 +290,7 @@ export default function Profile() {
             />
             {filteredDataSource && filteredDataSource.length > 0 && (
               <FlatList
-                style={{ marginVertical: 20 }}
+                style={{ marginTop: 20 }}
                 data={filteredDataSource}
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={ItemSeparatorView}
