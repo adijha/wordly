@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "302586414341",
+    "firebase_url": "https://wordly-rn.firebaseio.com",
+    "project_id": "wordly-rn",
+    "storage_bucket": "wordly-rn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302586414341:android:35fd5ad1f22bea09f6e36c",
+        "android_client_info": {
+          "package_name": "com.wordly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302586414341-jen48058sbef1n4gkk31j3fn4pc3c8cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw43VrXhUl7fs181pTmunS6NgpgaT0JHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302586414341-jen48058sbef1n4gkk31j3fn4pc3c8cn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
